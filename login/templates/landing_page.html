@@ -6,38 +6,125 @@
     <title>Welcome to Food</title>
     <style>
         body {
+            margin: 0;
+            padding: 0;
             font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 50px;
-            
+            background-color: #f8f8f8;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh; 
+            overflow-y: auto;
         }
+
         .container {
-            max-width: 600px;
-            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 15px;
+            width: 90vw;
+            min-height: 90vh;
             padding: 20px;
-            border: 1px solid #131212;
-            border-radius: 10px;
+            box-sizing: border-box;
+            margin: 20px 0; 
         }
-        h1 {
-            color: #000000;
+
+        .container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
         }
-        a {
+
+        .content {
+            grid-column: 2 / 3;
+            grid-row: 2 / 3;
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .content h1 {
+            margin: 0 0 15px;
+            font-size: 2.2em;
+            color: #333;
+        }
+
+        .content p {
+            margin: 0 0 15px;
+            font-size: 1.2em;
+            color: #666;
+        }
+
+        .content a {
             text-decoration: none;
             color: white;
             background: #007bff;
             padding: 10px 20px;
             border-radius: 5px;
             display: inline-block;
+            margin: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .content a:hover {
+            background: #0056b3;
+        }
+
+       
+        .additional-content {
+            grid-column: 1 / -1; 
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+            margin-top: 20px; 
+        }
+
+        .additional-content h2 {
+            margin: 0 0 15px;
+            font-size: 1.8em;
+            color: #333;
+        }
+
+        .additional-content p {
+            margin: 0 0 15px;
+            font-size: 1.1em;
+            color: #666;
         }
     </style>
 </head>
 <body>
+    
     <div class="container">
-        <h1>Welcome to Food</h1>
-        <p>This is the landing page for Food.</p>
-        <a href="/accounts/login/">Login</a>
-        <a href="/accounts/register/">Register</a>
-        <a href="">About</a>
+        <img src="https://images.pexels.com/photos/1565982/pexels-photo-1565982.jpeg" alt="food 1">
+        <img src="https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg" alt="food 2">
+        <img src="https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg" alt="food 3">
+        <img src="https://images.pexels.com/photos/660282/pexels-photo-660282.jpeg" alt="food 4">
+        
+        <div class="content">
+            <h1>Welcome to Food</h1>
+            <p>This is food.</p>
+            <a href="/accounts/login/">Login</a>
+            <a href="/accounts/register/">Register</a>
+            <a href="/login/about">About</a>
+        </div>
+
+        <img src="https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg" alt="food 5">
+        <img src="https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg" alt="food 6">
+        <img src="https://images.pexels.com/photos/660282/pexels-photo-660282.jpeg" alt="food 7">
+        <img src="https://images.pexels.com/photos/1565982/pexels-photo-1565982.jpeg" alt="food 8">
+
+       
+       
     </div>
 </body>
 </html>
