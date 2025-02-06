@@ -3,6 +3,32 @@
 {% block title %}Landing Page{% endblock %}
 
 {% block content %}
+<style>
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+    
+    .container img {
+        width: 200px; /* Adjust width as needed */
+        height: auto; /* Maintains aspect ratio */
+        border-radius: 10px; /* Optional: Adds rounded corners */
+        object-fit: cover; /* Ensures images fit within given dimensions */
+    }
+
+    .content {
+        text-align: center;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .content h1 {
+        font-size: 2rem;
+    }
+</style>
+
 <div class="container">
     <img src="https://images.pexels.com/photos/1565982/pexels-photo-1565982.jpeg" alt="food 1">
     <img src="https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg" alt="food 2">
