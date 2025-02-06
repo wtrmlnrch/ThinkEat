@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}My Account{% endblock %}
+
+{% block content %}
+<div class="account-container">
+    <h1>My Account</h1>
+    <p>This page is a placeholder for user account information and settings.</p>
+</div>
+
+<style>
+    .account-container {
+        text-align: center;
+        margin: 50px auto;
+        padding: 40px;
+        max-width: 800px;
+        background: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .account-container h1 {
+        font-size: 2.5em;
+        color: #333;
+    }
+
+    .account-container p {
+        font-size: 1.2em;
+        color: #666;
+    }
+</style>
+{% endblock %}

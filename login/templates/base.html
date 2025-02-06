@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Project{% endblock %}</title>
+</head>
+<body>
+    <!-- Navbar -->
+    {% if not request.path == '/login/' %}
+    <nav class="navbar">
+        <ul>
+            <li><a href="{% url 'landing_page' %}">Home</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'thinkeat' %}">ThinkEat</a></li>
+            <li><a href="{% url 'my_account' %}">My Account</a></li>
+        </ul>
+    </nav>
+    
+    
+    <style>
+        .navbar {
+            background-color: #333;
+            padding: 10px 20px;
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+    
+        .navbar ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            margin: 0;
+            padding: 0;
+        }
+    
+        .navbar ul li {
+            margin: 0 15px;
+        }
+    
+        .navbar ul li a {
+            text-decoration: none;
+            color: white;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+    
+        .navbar ul li a:hover {
+            color: #007bff;
+        }
+    </style>
+    
+    {% endif %}
+
+    <!-- Page Content -->
+    <div>
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
