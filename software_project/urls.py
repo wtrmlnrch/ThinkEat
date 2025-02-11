@@ -9,7 +9,4 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),  # Include auth URLs
     path('', RedirectView.as_view(url='/accounts/login/')),  # Redirect root to login
     path('', include('login.urls')),
-    path("login/about/",views.about, name="about"),
-    
-    
 ]

@@ -12,5 +12,3 @@ def thinkeat(request):
 def my_account(request):
     return render(request, 'my_account.html')
 
-def register(request):
-    return render(request, 'about.html')

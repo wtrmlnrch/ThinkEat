@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}ThinkEat{% endblock %}
+
+{% block content %}
+<div class="thinkeat-container">
+    <h1>ThinkEat</h1>
+    <p>This page will host the main functionality of the ThinkEat project.</p>
+</div>
+
+<style>
+    .thinkeat-container {
+        text-align: center;
+        margin: 50px auto;
+        padding: 40px;
+        max-width: 800px;
+        background: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .thinkeat-container h1 {
+        font-size: 2.5em;
+        color: #333;
+    }
+
+    .thinkeat-container p {
+        font-size: 1.2em;
+        color: #666;
+    }
+</style>
+{% endblock %}

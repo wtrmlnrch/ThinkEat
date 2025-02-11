@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}About{% endblock %}
+
+{% block content %}
+<div class="about-container">
+    <h1>About This Project</h1>
+    <p>
+        Welcome to ThinkEat, where we combine thoughtful technology and culinary magic. 
+        Our goal is to help you make the most of your meals with innovative ideas and smart solutions.
+    </p>
+</div>
+
+<style>
+    .about-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 40px;
+        background-color: #ffffff;
+        margin: 20px auto;
+        border-radius: 15px;
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+        max-width: 800px;
+    }
+
+    .about-container h1 {
+        margin-bottom: 20px;
+        font-size: 2.5em;
+        color: #333;
+    }
+
+    .about-container p {
+        font-size: 1.2em;
+        color: #666;
+    }
+</style>
+{% endblock %}
