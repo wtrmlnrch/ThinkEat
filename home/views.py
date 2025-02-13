@@ -57,4 +57,4 @@ def register(request):
         messages.info(request, "Account created successfully!")
         return redirect('/register/')
     
-    return render(request, 'register.html')
+    return render(request, 'registration/registration.html')
