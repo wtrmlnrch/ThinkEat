@@ -5,8 +5,8 @@
 __pycache__
 db.sqlite3
 media
-Software-Project\software_project\__pycache__\settings.cpython-310.pyc
-Software-Project\db.sqlite3
+software_project\__pycache__\settings.cpython-310.pyc
+db.sqlite3
 *.sqlite3
 
 # Backup files # 
