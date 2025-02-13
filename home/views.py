@@ -1,5 +1,8 @@
 from django.shortcuts import render, redirect
+from django.contrib import messages
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
+from .models import *
 
 def landing_page(request):
     return render(request, 'home_page/landing_page.html')
@@ -15,12 +18,19 @@ def my_account(request):
 
 def login(request):
     if request.method == 'POST':
-        username = request.POST['text']
+        username = request.POST['username']
         password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect(landing_page)
+        
+        if not User.objects.filter(username=username).exists():
+            messages.error(request, "Invalid Username")
+            return redirect('/login/')
+        user = authenticate(username=username,password=password)
+
+        if user is None:
+            messages.error(request, "Invalid Password")
+            return redirect('/login/')
         else:
-            return render(request, 'login.html', {'error': 'Nuhuh'})
+            login(request, user)
+            return redirect('/landing_page/')
+        
     return render(request, 'login.html')
