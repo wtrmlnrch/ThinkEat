@@ -5,6 +5,8 @@ class HomeConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'home'
 
+
+
 class landingConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'landing'
