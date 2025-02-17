@@ -37,6 +37,10 @@
             width: 100%; 
             text-align: center;
         }
+        .form-group {
+            width: 100%;
+            text-align: left;
+        }
         label {
             font-weight: bold;
             margin-bottom: 5px;
@@ -44,7 +48,7 @@
             text-align: center; 
         }
         input[type="text"], input[type="password"] {
-            width: 90%; 
+            width: 94%; 
             padding: 8px;
             margin-bottom: 10px;
             border: 1px solid #ccc;
@@ -70,12 +74,28 @@
 <body>
     <div class="login-container">
         <h1>Login</h1>
+
+
+        {% if messages %}
+        <div class="alert alert-primary" role="alert">
+            {% for message in messages %}
+            {{ message }}
+            {% endfor %}
+        </div>
+        {% endif %}
         <form method="post">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">Login</button>
-            <button type="register">Register</button>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" name="username" id="username" placeholder="Enter username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
+            </div>            
 
+            <button type="submit">Login</button>
+            <button type="button" onclick="window.location.href='/register/';">Register</button>
         </form>
     </div>
 </body>
