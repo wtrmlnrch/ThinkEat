@@ -42,6 +42,7 @@ def register(request):
         last_name = request.POST.get('last_name')
         username = request.POST.get('username')
         password = request.POST.get('password')
+        email_address = request.POST.get('email_address')
 
         user = User.objects.filter(username=username)
 
@@ -55,6 +56,6 @@ def register(request):
         user.save()
 
         messages.info(request, "Account created successfully!")
-        return redirect('/register/')
+        return render(request, 'registration/registration.html')
     
     return render(request, 'registration/registration.html')

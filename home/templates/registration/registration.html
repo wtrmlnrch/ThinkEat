@@ -47,7 +47,7 @@
             text-align: center; 
             color: #c9c9c9;
         }
-        input[type="text"], input[type="password"], input[type="first_name"], input[type="last_name"] {
+        input[type="text"], input[type="password"], input[type="first_name"], input[type="last_name"], input[type="email"] {
             width: 94%; 
             padding: 8px;
             margin-bottom: 10px;
@@ -69,6 +69,14 @@
         button:hover {
             background-color: #066c16;
         }
+        .alert {
+            margin-bottom: 10px;
+            border-radius: 5px;
+            font-size: 20px;
+            text-align: center;
+            color:#97daec;
+        }
+
     </style>
 </head>
 <body>
@@ -77,12 +85,23 @@
 
 
         {% if messages %}
-        <div class="alert alert-primary" role="alert">
+        <div class="alert {% for message in messages %}alert-{{ message.tags }}{% endfor %}" role="alert">
             {% for message in messages %}
-            {{ message }}
+            <span id="message-content">{{ message }}</span>
             {% endfor %}
         </div>
+
+        <script>
+            let message = document.getElementById("message-content").innerText;
+            if (message === "Account created successfully!") {  // Check for specific message
+                setTimeout(function() {
+                    window.location.href = "/landing_page/";  // Redirect after 3 seconds
+                }, 1000);
+            }
+        </script>
         {% endif %}
+
+
         <form method="post">
             {% csrf_token %}
             <div class="form-group">
@@ -92,6 +111,10 @@
             <div class="form-group">
                 <label for="last_name">Last Name</label>
                 <input type="last_name" class="form-control" name="last_name" id="last_name" required>
+            </div>
+            <div class="form-group">
+                <label for="email_address">Email Adress</label>
+                <input type="email" class="form-control" name="email_address" id="email_address" required>
             </div>  
             <div class="form-group">
                 <label for="username">Username</label>
@@ -103,6 +126,7 @@
             </div>            
 
             <button type="submit">Submit</button>
+            
         </form>
     </div>
 </body>
