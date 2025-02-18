@@ -50,9 +50,14 @@ def register(request):
             messages.info(request, "Username already taken!")
             return redirect('/register/')
         
-        user = User.objects.create_user(first_name=first_name, last_name=last_name,username=username, email=email)
-
-        user.set_password(password)
+        user = User.objects.create_user(
+            first_name=first_name, 
+            last_name=last_name, 
+            username=username, 
+            email=email,
+            password=password  # Pass password directly here
+        )
+        
         user.save()
 
         messages.info(request, "Account created successfully!")
