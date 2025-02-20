@@ -3,109 +3,149 @@
 {% block title %}About{% endblock %}
 
 {% block content %}
-
 <style>
-    * {
-      box-sizing: border-box;
+    /* General Body Styling */
+    body {
+        font-family: 'Segoe UI', Arial, sans-serif;
+        margin: 0;
+        background-color: #fefbf5; /* Light beige for a cozy feel */
+        color: #4b3f35; /* Warm dark brown */
+        line-height: 1.6;
     }
-/* Create two equal columns that floats next to each other */
-.column {
-  float: left;
-  width: 50%;
-  padding: 10px;
-  height: 300px; /* Should be removed. Only for demonstration */
-}
 
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
+    /* Header/Title Styling */
+    .header {
+        padding: 20px;
+        text-align: center;
+        background-color: #8d6e63; /* Wood-tone */
+        color: white;
+        font-size: 24px;
+        font-weight: bold;
+        text-transform: uppercase;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Content Layout */
+    .content {
+        padding: 20px;
+        max-width: 1100px;
+        margin: 20px auto;
+    }
+
+    /* Two-column layout with flexibility */
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+    }
+
+    .column {
+        display: flex; /* Make the content inside the column a horizontal layout */
+        gap: 20px; /* Add spacing between the image and text */
+        align-items: center; /* Align items vertically in the center */
+        background-color: #fbe9e7; /* Box background */
+        padding: 20px;
+        border-radius: 12px;
+        border: 2px solid #8d6e63;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Image styling for consistency */
+    .column img {
+        flex-shrink: 0; /* Prevent the image from shrinking */
+        width: 150px; /* Fixed image width */
+        height: auto; /* Maintain aspect ratio */
+        border-radius: 8px;
+        border: 2px solid #8d6e63;
+    }
+
+    /* Title Styling for Columns */
+    .column h2 {
+        color: #4b3f35;
+        font-size: 20px;
+        border-bottom: 2px solid #8d6e63;
+        padding-bottom: 5px;
+        margin-bottom: 15px;
+    }
+
+    /* Links or additional text */
+    .column p {
+        margin: 10px 0;
+        color: #4b3f35;
+    }
+    .column div {
+        flex: 1; /* Allow the text to take the remaining space */
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .column {
+            flex-direction: column; /* Stack the image and text on smaller screens */
+        }
+
+        .column img {
+            width: 100%; /* Make the image full-width on small screens */
+        }
+    }
 </style>
-</head>
-<body>
 
-    <style>
-        /* Style the body */
-        body {
-          font-family: Arial;
-          margin: 0;
-        }
-        
-        /* Header/Logo Title */
-        .header {
-          padding: 10px;
-          text-align: center;
-          background: #000000;
-          color: white;
-          font-size: 15px;
-        }
-        
-        /* Page Content */
-        .content {padding:20px;}
-        </style>
-        </head>
-        <body>
-        
-        <div class="header">
-          <h1>About Us</h1>
-        </div>
-        
-
-<div class="row">
-  <div class="column" style="background-color:#ff8e8e;">
-    <h2>What is ThinkEat?</h2>
-    <p>At ThinkEat, we empower individuals to transform their available 
-      ingredients into delicious, easy-to-follow recipes using OpenAI's 
-      ChatGPT models. Our mission is to help people make the most of the 
-      food they have, reducing waste and promoting sustainable consumption. 
-      Food waste in America is a significant issue, with approximately 38% 
-      of all food in America going unsold or uneaten each year, equating to 
-      92 billion pounds of waste. Additionally, Americans spend an average 
-      of $166 per month per person on dining out. Costs like that add up very 
-      quickly. By providing personalized recipes based on the ingredients you 
-      already have, ThinkEat aims to reduce food waste and help you save money. 
-      Join us in creating a more sustainable and cost-effective approach to 
-      cooking and dining.
-    </p>
-  </div>
-  <div class="column" style="background-color:#ff8e7e;">
-    <h2>Picture</h2>
-    <p><img src = 'https://static.independent.co.uk/s3fs-public/thumbnails/image/2020/01/22/12/dinner-table.jpg' width="400" 
-      height="220"></p>
-  </div>
-  <div class="column" style="background-color:#ff8e7e;">
-    <h2>Picture</h2>
-    <p><img src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/OpenAI_Logo.svg/2560px-OpenAI_Logo.svg.png'
-      width = '400'
-      height = '200'> </p>
-  </div>
-  <div class="row">
-    <div class="column" style="background-color:#ff8e8e;">
-      <h2>Open AI</h2>
-      <p>
-      </p>
-      
-    </div>
-    <div class="row">
-      <div class="column" style="background-color:#ff8e8e;">
-        <h2>The Team</h2>
-        <p>
-        </p>
-      </div>
-      <div class="column" style="background-color:#ff8e7e;">
-        <h2>Picture</h2>
-        <p><img src = 'https://media.npr.org/assets/music/news/2010/09/maroon-5af6f2c1145368cf09ec543767a4db98644a297f.jpg?s=1100&c=50&f=jpeg'
-          width = '200'
-          height = '200'> </p>
-        <p><img src = 'https://m.media-amazon.com/images/I/515uNo6pm2L._AC_UF1000,1000_QL80_.jpg' 
-        width = '200'
-        height = '200'></p>
-        <p><img src = 'https://preview.redd.it/ygeswqivpbd81.png?width=640&crop=smart&auto=webp&s=e1d388784ba26e52ffe210299ee6f3fba1ccb773' 
-        width = '200'
-        height = '200'></p>
-      </div>
+<!-- Page Content -->
+<div class="header">
+    <h1>About Us</h1>
 </div>
 
+<div class="content">
+    <div class="row">
+        <!-- Column 1: What is ThinkEat -->
+        <div class="column">
+          <img src="https://static.independent.co.uk/s3fs-public/thumbnails/image/2020/01/22/12/dinner-table.jpg" alt="Dinner table">
+          <div>
+              <h2>What is ThinkEat?</h2>
+              <p>
+                  At ThinkEat, we empower individuals to transform their available 
+                  ingredients into delicious, easy-to-follow recipes using OpenAI's 
+                  ChatGPT models. Our mission is to help people make the most of the 
+                  food they have, reducing waste and promoting sustainable consumption.
+              </p>
+              <p>
+                  Food waste in America is a significant issue, with approximately 38% 
+                  of all food going unsold or uneaten each year, equating to 
+                  92 billion pounds of waste. By providing personalized recipes based 
+                  on the ingredients you already have, ThinkEat aims to reduce food waste 
+                  and help you save money. Join us in creating a more sustainable approach 
+                  to cooking and dining.
+              </p>
+          </div>
+      </div>
+
+
+    <div class="row">
+        <!-- Column 3: OpenAI Integration -->
+        <div class="column">
+            <h2>Powered by OpenAI</h2>
+            <p>
+              ThinkEat is powered by OpenAI’s cutting-edge ChatGPT models, harnessing the latest advancements in AI to deliver a seamless and intelligent cooking experience. Our system takes your listed ingredients and dynamically searches for the most relevant and practical recipes, ensuring that every suggestion is both accessible and creative to our users.
+              Unlike traditional recipe searches, ThinkEat doesn’t just pull static results—it intelligently understands context, flavor profiles, and cooking techniques, curating personalized recommendations tailored specifically to your available ingredients. By leveraging ChatGPT’s ability to aggregate knowledge from across the web, we provide access to an extensive and ever-growing repertoire of recipes—from Michelin-star chefs to hidden gems from niche culinary communities.
+              This AI-driven approach allows ThinkEat to continuously refine its recommendations, offering a mix of classic comfort foods, quick weekday meals, and innovative dishes you may have never considered—all designed to minimize waste and maximize flavor. With ThinkEat, every meal is an opportunity to explore, create, and savor, using the power of AI to turn what’s in your kitchen into something extraordinary.
+            </p>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/OpenAI_Logo.svg/2560px-OpenAI_Logo.svg.png" alt="OpenAI Logo" style="width: 50%; max-width: 300px; height: auto; border-radius: 8px;">
+        </div>
+
+        <!-- Column 4: The Team -->
+        <div class="column">
+            <h2>Meet the Team</h2>
+            <p>
+                Behind ThinkEat is a group of passionate individuals dedicated to 
+                making a difference. From developers to food enthusiasts, our team 
+                is committed to creating a platform that inspires sustainable cooking.
+            </p>
+            <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                <img src="https://media.npr.org/assets/music/news/2010/09/maroon-5af6f2c1145368cf09ec543767a4db98644a297f.jpg" alt="Team Member" style="width: 150px; height: 150px;">
+                <img src="https://m.media-amazon.com/images/I/515uNo6pm2L._AC_UF1000,1000_QL80_.jpg" alt="Team Member" style="width: 150px; height: 150px;">
+                <img src="https://preview.redd.it/ygeswqivpbd81.png?width=640&crop=smart&auto=webp&s=e1d388784ba26e52ffe210299ee6f3fba1ccb773" alt="Team Member" style="width: 150px; height: 150px;">
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
