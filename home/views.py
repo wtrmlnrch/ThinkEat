@@ -44,23 +44,16 @@ def register(request):
         password = request.POST.get('password')
         email = request.POST.get('email_address')
 
-        user = User.objects.filter(username=username)
-
-        if user.exists():
-            messages.info(request, "Username already taken!")
+        # Check if username already exists
+        if User.objects.filter(username=username).exists():
+            messages.error(request, "Username already taken!")
             return redirect('/register/')
-        
-        user = User.objects.create_user(
-            first_name=first_name, 
-            last_name=last_name, 
-            username=username, 
-            email=email,
-            password=password  # Pass password directly here
-        )
-        
-        user.save()
 
-        messages.info(request, "Account created successfully!")
-        return render(request, 'registration/registration.html')
-    
+        # Create the user and its profile
+        user = User.objects.create_user(username=username, password=password, email=email, first_name=first_name, last_name=last_name)
+        UserProfile.objects.create(user=user) 
+
+        messages.success(request, "Account created successfully! Please log in.")
+        return redirect('/login/')
+
     return render(request, 'registration/registration.html')
