@@ -17,7 +17,7 @@ def thinkeat(request):
 def my_account(request):
     return render(request, 'registration/my_account.html')
 
-def login(request):
+def user_login(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -42,7 +42,7 @@ def register(request):
         last_name = request.POST.get('last_name')
         username = request.POST.get('username')
         password = request.POST.get('password')
-        email_address = request.POST.get('email_address')
+        email = request.POST.get('email_address')
 
         user = User.objects.filter(username=username)
 
@@ -50,9 +50,14 @@ def register(request):
             messages.info(request, "Username already taken!")
             return redirect('/register/')
         
-        user = User.objects.create_user(first_name=first_name, last_name=last_name,username=username)
-
-        user.set_password(password)
+        user = User.objects.create_user(
+            first_name=first_name, 
+            last_name=last_name, 
+            username=username, 
+            email=email,
+            password=password  # Pass password directly here
+        )
+        
         user.save()
 
         messages.info(request, "Account created successfully!")
