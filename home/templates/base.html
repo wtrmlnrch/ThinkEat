@@ -10,6 +10,7 @@
     {% if not request.path == '/login/' %}
     <nav class="navbar">
         <ul>
+            
             <li><a href="{% url 'landing_page' %}">Home</a></li>
             <li><a href="{% url 'about' %}">About</a></li>
             <li><a href="{% url 'thinkeat' %}">ThinkEat</a></li>
@@ -20,6 +21,7 @@
     
     <style>
         .navbar {
+            cursor: url('/static/cursors/custom_cursor.cur'), auto;
             background-color: #333;
             padding: 10px 20px;
             position: sticky;
@@ -30,6 +32,7 @@
         }
     
         .navbar ul {
+            cursor: url('/static/cursors/custom_cursor.cur'), auto;
             list-style: none;
             display: flex;
             justify-content: center;
@@ -38,10 +41,12 @@
         }
     
         .navbar ul li {
+            cursor: url('/static/cursors/custom_cursor.cur'), auto;
             margin: 0 15px;
         }
     
         .navbar ul li a {
+            cursor: url('/static/cursors/custom_cursor.cur'), auto;
             text-decoration: none;
             color: white;
             font-size: 1.1em;
@@ -50,6 +55,7 @@
         }
     
         .navbar ul li a:hover {
+            cursor: url('/static/cursors/custom_cursor.cur'), auto;
             color: #0c9315;
         }
     </style>
