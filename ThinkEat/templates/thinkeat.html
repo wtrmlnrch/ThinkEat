@@ -5,7 +5,12 @@
 {% block content %}
 <div class="thinkeat-container">
     <h1>ThinkEat</h1>
-    <p>This page will host the main functionality of the ThinkEat project.</p>
+    <p>Please enter your ingredients below one at a time!</p>
+    
+    <input type="text" id="ingredientInput" placeholder="Enter an ingredient">
+    <button onclick="addIngredient()">Add</button>
+    
+    <div class="output-box" id="ingredientList"></div>
 </div>
 
 <style>
@@ -28,5 +33,46 @@
         font-size: 1.2em;
         color: #666;
     }
+
+    input[type="text"] {
+        padding: 10px;
+        width: 60%;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 1em;
+    }
+
+    button {
+        padding: 10px 15px;
+        font-size: 1em;
+        margin-left: 10px;
+        border: none;
+        background-color: #28a745;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .output-box {
+        margin-top: 20px;
+        padding: 15px;
+        background: #f8f8f8;
+        border-radius: 5px;
+        min-height: 50px;
+        border: 1px solid #ddd;
+    }
 </style>
+
+<script>
+    let ingredients = [];
+
+    function addIngredient() {
+        let input = document.getElementById("ingredientInput").value.trim();
+        if (input) {
+            ingredients.push(input);
+            document.getElementById("ingredientList").innerText = ingredients.join(", ");
+            document.getElementById("ingredientInput").value = "";
+        }
+    }
+</script>
 {% endblock %}
