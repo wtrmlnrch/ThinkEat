@@ -5,7 +5,7 @@ OLLAMA_URL = "http://localhost:11434/api/generate"
 
 def generate_text(prompt):
     payload = {
-        "model": "llama2",  # or another model you've downloaded
+        "model": "llama3.2",  # or another model you've downloaded
         "prompt": prompt,
         "stream": False
     }
