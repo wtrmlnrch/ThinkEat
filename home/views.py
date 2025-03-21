@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import *
-
+#comment
 def landing_page(request):
     return render(request, 'home_page/landing_page.html')
 
