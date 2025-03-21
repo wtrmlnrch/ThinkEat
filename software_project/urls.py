@@ -9,6 +9,7 @@ urlpatterns = [
     path('about/', views.about, name='about'),
     path('admin/', admin.site.urls),
     path('login/', auth_views.LoginView.as_view(), name='login'),  # Include auth URLs
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('', RedirectView.as_view(url='/login/')),  # Redirect root to login
     path('', include('home.urls')),
 ]
