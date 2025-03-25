@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from .models import *
 #comment
 def landing_page(request):
@@ -19,10 +18,10 @@ def my_account(request):
 
 def user_login(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
+        username = request.POST.get('username')
+        password = request.POST.get('password')
         
-        if not User.objects.filter(username=username).exists():
+        if not CustomUser.objects.filter(username=username).exists():
             messages.error(request, "Invalid Username")
             return redirect('/login/')
         user = authenticate(username=username,password=password)
@@ -44,23 +43,16 @@ def register(request):
         password = request.POST.get('password')
         email = request.POST.get('email_address')
 
-        user = User.objects.filter(username=username)
-
-        if user.exists():
-            messages.info(request, "Username already taken!")
+        # Check if username already exists
+        if CustomUser.objects.filter(username=username).exists():
+            messages.error(request, "Username already taken!")
             return redirect('/register/')
-        
-        user = User.objects.create_user(
-            first_name=first_name, 
-            last_name=last_name, 
-            username=username, 
-            email=email,
-            password=password  # Pass password directly here
-        )
-        
-        user.save()
 
-        messages.info(request, "Account created successfully!")
-        return render(request, 'registration/registration.html')
-    
+        # Create the user and its profile
+        CustomUser.objects.create_user(username=username, password=password, email=email, 
+                                       first_name=first_name, last_name=last_name)
+
+        messages.success(request, "Account created successfully! Please log in.")
+        return redirect('/login/')
+
     return render(request, 'registration/registration.html')

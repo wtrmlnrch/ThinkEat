@@ -137,5 +137,8 @@ LOGOUT_REDIRECT_URL = '/accounts/login/'  # Redirect to login page after logout
 LOGIN_REDIRECT_URL = '/'
 LOGIN_REDIRECT_URL = '/landing_page/'
 
+LOGOUT_REDIRECT_URL = "/" 
 
+# User Model
+AUTH_USER_MODEL = 'home.CustomUser'
 

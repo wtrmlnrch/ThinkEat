@@ -1,0 +1,40 @@
+[
+{
+  "model": "home.customuser",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$yPAc6NDRUYJgqoESxiPRwO$+C+DoKT/e3r9nuGBi9PSymVMumOB+ZnshbxECU75uP0=",
+    "last_login": "2025-03-25T20:10:22.370Z",
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "Dea",
+    "last_name": "Sustaita",
+    "email": "deasustaita@gmail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2025-03-25T19:31:08Z",
+    "birth_date": null,
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "home.customuser",
+  "pk": 5,
+  "fields": {
+    "password": "pbkdf2_sha256$870000$iiL4sEstxSbaYMOEfRg8Y3$ay4rMT0SUbtC5GYbm6WiL5lOL35QiYhgN1bvitqqp4s=",
+    "last_login": "2025-03-25T20:05:53.447Z",
+    "is_superuser": false,
+    "username": "dsustaita",
+    "first_name": "Dea",
+    "last_name": "Sustaita",
+    "email": "deasustaita@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-03-25T20:05:45.828Z",
+    "birth_date": null,
+    "groups": [],
+    "user_permissions": []
+  }
+}
+]
