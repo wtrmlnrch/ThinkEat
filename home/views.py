@@ -18,8 +18,8 @@ def my_account(request):
 
 def user_login(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
+        username = request.POST.get('username')
+        password = request.POST.get('password')
         
         if not CustomUser.objects.filter(username=username).exists():
             messages.error(request, "Invalid Username")
@@ -49,8 +49,8 @@ def register(request):
             return redirect('/register/')
 
         # Create the user and its profile
-        user = CustomUser.objects.create_user(username=username, password=password, email=email, first_name=first_name, last_name=last_name)
-        CustomUser.objects.create(username=username) 
+        CustomUser.objects.create_user(username=username, password=password, email=email, 
+                                       first_name=first_name, last_name=last_name)
 
         messages.success(request, "Account created successfully! Please log in.")
         return redirect('/login/')
