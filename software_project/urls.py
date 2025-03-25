@@ -12,4 +12,5 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('', RedirectView.as_view(url='/login/')),  # Redirect root to login
     path('', include('home.urls')),
+    path('',include('ThinkEat.urls'))
 ]
