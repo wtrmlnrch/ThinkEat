@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from .models import *
 
 def landing_page(request):
@@ -22,7 +21,7 @@ def user_login(request):
         username = request.POST['username']
         password = request.POST['password']
         
-        if not User.objects.filter(username=username).exists():
+        if not CustomUser.objects.filter(username=username).exists():
             messages.error(request, "Invalid Username")
             return redirect('/login/')
         user = authenticate(username=username,password=password)
@@ -45,13 +44,13 @@ def register(request):
         email = request.POST.get('email_address')
 
         # Check if username already exists
-        if User.objects.filter(username=username).exists():
+        if CustomUser.objects.filter(username=username).exists():
             messages.error(request, "Username already taken!")
             return redirect('/register/')
 
         # Create the user and its profile
-        user = User.objects.create_user(username=username, password=password, email=email, first_name=first_name, last_name=last_name)
-        UserProfile.objects.create(user=user) 
+        user = CustomUser.objects.create_user(username=username, password=password, email=email, first_name=first_name, last_name=last_name)
+        CustomUser.objects.create(username=username) 
 
         messages.success(request, "Account created successfully! Please log in.")
         return redirect('/login/')
