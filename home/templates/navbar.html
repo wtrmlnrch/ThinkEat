@@ -19,8 +19,11 @@
         </ul>
     
         <div class="logo">
-            <img src="/static/images/logo.png" alt="Logo">
+            <a href="{% url 'landing_page' %}">
+                <img src="{% static 'images/logo.png' %}" alt="Logo">
+            </a>
         </div>
+        
     
         <ul class="nav-right">
             <li><a href="{% url 'thinkeat' %}">ThinkEat</a></li>
