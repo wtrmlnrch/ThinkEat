@@ -1,7 +1,14 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}About{% endblock %}
-{% block content %}
+
+{% block body %}
+    {% include 'navbar.html' %}
+    <div>
+        {% block content %}{% endblock %}
+    </div>
+
 <style>
     /* General Body Styling */
     body {

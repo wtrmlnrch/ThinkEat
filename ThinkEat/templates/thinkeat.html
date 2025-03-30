@@ -1,9 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}ThinkEat Recipe Chat{% endblock %}
+{% block title %}ThinkEat Recipe Chatlog{% endblock %}
 
-{% block content %}
+{% block body %}
+    {% include 'navbar.html' %}
+    <div>
+        {% block content %}{% endblock %}
+    </div>
 <div class="recipe-container">
     <div class="recipe-header">
         Speak to ThinkEat!

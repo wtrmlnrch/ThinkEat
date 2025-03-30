@@ -1,8 +1,13 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}My Account{% endblock %}
 
-{% block content %}
+{% block body %}
+    {% include 'navbar.html' %}
+    <div>
+        {% block content %}{% endblock %}
+    </div>
 <div class="account-container">
     <h1>My Account</h1>
     {% if user.is_authenticated %}

@@ -3,84 +3,15 @@
 <html lang="en">
 
 <head>
-    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.png' %}" >
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.png' %}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}My Project{% endblock %}</title>
+    {% block extra_head %}{% endblock %}
 </head>
 
 <body>
-    <!-- Navbar -->
-    {% if not request.path == '/login/' %}
-    <nav class="navbar">
-        <ul class="nav-left">
-            <li><a href="{% url 'landing_page' %}">Home</a></li>
-            <li><a href="{% url 'about' %}">About</a></li>
-        </ul>
-    
-        <div class="logo">
-            <img src="/static/images/logo.png" alt="Logo">
-        </div>
-    
-        <ul class="nav-right">
-            <li><a href="{% url 'thinkeat' %}">ThinkEat</a></li>
-            <li><a href="{% url 'my_account' %}">My Account</a></li>
-        </ul>
-    </nav>
-
-
-    <style>
-        .navbar {
-            background-color: #333;
-            padding: 10px 20px;
-            position: sticky;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .navbar ul {
-            list-style: none;
-            display: flex;
-            margin: 0 10px;
-            padding: 0;
-        }
-
-        .navbar ul li {
-            margin: 0 15px;
-        }
-
-        .navbar ul li a {
-            text-decoration: none;
-            color: white;
-            font-family: TimesNewRoman, "Times New Roman", Times, Baskerville, Georgia, serif;
-            font-size: 1.2em;
-            font-weight: bold;
-            transition: color 0.3s ease;
-        }
-
-        .navbar ul li a:hover {
-            color: #e48007;
-        }
-
-        .logo img {
-            height: 100px;
-            width: auto;
-            margin: 0 20px;
-        }
-    </style>
-
-    {% endif %}
-
-    <!-- Page Content -->
-    <div>
-        {% block content %}{% endblock %}
-    </div>
+    {% block body %}{% endblock %}
 </body>
 
 </html>
