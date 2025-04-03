@@ -6,19 +6,14 @@
     <!-- Navbar -->
     {% if not request.path == '/login/' %}
     <nav class="navbar">
-        <ul class="nav-left">
+        <ul class="navi-list">
             <li><a href="{% url 'landing_page' %}">Home</a></li>
             <li><a href="{% url 'about' %}">About</a></li>
-        </ul>
-    
-        <div class="logo">
-            <a href="{% url 'landing_page' %}">
-                <img src="{% static 'images/logo.png' %}" alt="Logo">
-            </a>
-        </div>
-        
-    
-        <ul class="nav-right">
+            <li class="centered-logo">
+                <a href="{% url 'landing_page' %}">
+                    <img src="{% static 'images/logo.png' %}" alt="Logo">
+                </a>
+            </li>
             <li><a href="{% url 'thinkeat' %}">ThinkEat</a></li>
             <li><a href="{% url 'my_account' %}">My Account</a></li>
         </ul>
@@ -30,28 +25,34 @@
             background-color: #333;
             padding: 10px 20px;
             position: sticky;
+            height: 120px;
             top: 0;
-            width: 100%;
+            width: 100vw;
+            max-width: none;
             z-index: 1000;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-
             display: flex;
             justify-content: center;
             align-items: center;
+            box-sizing: border-box;
         }
 
-        .navbar ul {
-            list-style: none;
+        .navi-list {
             display: flex;
-            margin: 0 10px;
+            gap: 50px;
+            align-items: center;
             padding: 0;
+            margin: 0;
         }
 
-        .navbar ul li {
-            margin: 0 15px;
+        .navi-list li {
+            flex: 1;
+            text-align: center;
+            list-style: none;
+            display: inline-block;
         }
 
-        .navbar ul li a {
+        .navi-list li a {
             text-decoration: none;
             color: white;
             font-family: TimesNewRoman, "Times New Roman", Times, Baskerville, Georgia, serif;
@@ -60,14 +61,26 @@
             transition: color 0.3s ease;
         }
 
-        .navbar ul li a:hover {
+        .navi-list li a:hover {
             color: #e48007;
         }
 
-        .logo img {
-            height: 100px;
+        /* Centered Logo Styling */
+        .centered-logo {
+            flex: 0 0 auto;
+        }
+
+        .centered-logo img {
+            height: 100px; /* Adjust the logo size */
             width: auto;
-            margin: 0 20px;
+        }
+
+        /* Prevent Horizontal Scrolling Issues */
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            overflow-x: hidden;
         }
     </style>
 
