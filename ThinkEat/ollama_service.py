@@ -15,3 +15,7 @@ def generate_text(prompt):
         return response.json().get('response')
     else:
         return f"Error: {response.status_code} - {response.text}"
+def call_ollama_ai(prompt):
+    # send prompt to AI model and return the response
+    # example placeholder:
+    return "Mock response to: " + prompt
