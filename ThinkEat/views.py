@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from .ollama_service import generate_text
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
+from datetime import datetime
 
 INSTRUCTION = (
     "Here are a couple of different ingredients. I would like you to analyze them and give me name of 5 different recipes that anybody would be able to cook, "
@@ -14,6 +15,17 @@ INSTRUCTION = (
     "Give the instructions with the title or number associated with the listed recipe. The ingredients are as listed in a comma separated line: "
 )
 
+def format_recipe_list(response_text):
+    # Detect lines like "1. Recipe Name"
+    recipe_lines = re.findall(r"^\s*(\d+)\.\s*(.+)", response_text, re.MULTILINE)
+    if recipe_lines:
+        formatted = "Here are 5 recipe ideas:\n"
+        for num, title in recipe_lines:
+            formatted += f"    {num}. {title}\n"
+        formatted += "\nType the number or title of the recipe you'd like instructions for.\nType \"more\" to get more recipe suggestions."
+        return formatted, {num: title for num, title in recipe_lines}
+    return response_text, {}
+
 @csrf_exempt
 def chat_view(request):
     if request.method == "POST":
@@ -24,46 +36,42 @@ def chat_view(request):
         last_ingredients = session.get("last_ingredients", "")
         recipe_map = session.get("recipe_map", {})
 
-        # INGREDIENT INPUT
+        # Track conversation
+        chat_history = []
+
         if ',' in user_input and lower_input != "more" and not lower_input.isdigit():
+            # Ingredient list
             session["last_ingredients"] = user_input
             prompt_to_send = INSTRUCTION + user_input
-
-            # Get AI response (list of recipes)
-            ollama_response = generate_text(prompt_to_send)
-
-            # Extract recipes from response (expects 1. Title \n 2. Title ...)
-            recipe_lines = re.findall(r"^\s*(\d+)\.\s*(.+)", ollama_response, re.MULTILINE)
-            recipe_map = {num: title for num, title in recipe_lines}
+            raw_response = generate_text(prompt_to_send)
+            formatted_response, recipe_map = format_recipe_list(raw_response)
             session["recipe_map"] = recipe_map
 
-        # "MORE" – Use last ingredients
         elif lower_input == "more" and last_ingredients:
+            # Reuse previous ingredients
             prompt_to_send = INSTRUCTION + last_ingredients
-            ollama_response = generate_text(prompt_to_send)
-
-            # Extract recipes again and update map
-            recipe_lines = re.findall(r"^\s*(\d+)\.\s*(.+)", ollama_response, re.MULTILINE)
-            recipe_map = {num: title for num, title in recipe_lines}
+            raw_response = generate_text(prompt_to_send)
+            formatted_response, recipe_map = format_recipe_list(raw_response)
             session["recipe_map"] = recipe_map
 
-        # NUMBER – Map to recipe
         elif user_input in recipe_map:
+            # User typed "1", "2", etc.
             title = recipe_map[user_input]
             prompt_to_send = f"Make me a simple recipe for {title}"
-            ollama_response = generate_text(prompt_to_send)
+            formatted_response = generate_text(prompt_to_send)
 
-        # TITLE or unknown input
         else:
+            # Treat as title or fallback
             prompt_to_send = f"Make me a simple recipe for {user_input}"
-            ollama_response = generate_text(prompt_to_send)
+            formatted_response = generate_text(prompt_to_send)
+
+        # Add messages to history
+        chat_history.append({'role': 'user', 'content': user_input, 'timestamp': datetime.now().strftime("%I:%M %p")})
+        chat_history.append({'role': 'ai', 'content': formatted_response, 'timestamp': datetime.now().strftime("%I:%M %p")})
 
         return render(request, 'thinkeat.html', {
-            'response': ollama_response,
-            'chat_history': [
-                {'role': 'user', 'content': user_input},
-                {'role': 'ai', 'content': ollama_response}
-            ]
+            'chat_history': chat_history,
+            'response': formatted_response
         })
 
     return render(request, 'thinkeat.html', {'error': 'POST request required'})
