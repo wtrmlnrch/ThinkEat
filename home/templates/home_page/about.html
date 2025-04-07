@@ -4,167 +4,204 @@
 {% block title %}About{% endblock %}
 
 {% block body %}
-    {% include 'navbar.html' %}
-    <div>
-        {% block content %}{% endblock %}
-    </div>
+{% include 'navbar.html' %}
+<link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Schoolbell&display=swap" rel="stylesheet">
 
 <style>
-    /* General Body Styling */
     body {
-        cursor: url('/static/cursors/custom_cursor.cur'), auto;
-        font-family: 'Segoe UI', Arial, sans-serif;
+        background-color: #2f2f2f;
+        background-image: url('https://www.transparenttextures.com/patterns/asfalt-light.png');
+        color: #f8f8f8;
+        font-family: 'Indie Flower', cursive;
         margin: 0;
-        background-color: #fefbf5; /* Light beige for a cozy feel */
-        color: #4b3f35; /* Warm dark brown */
+        padding: 0;
     }
 
-    /* Header/Title Styling */
     .header {
-        padding: 20px;
         text-align: center;
-        background-color: #8d6e63; /* Wood-tone */
-        color: white;
-        font-size: 24px;
-        font-weight: bold;
-        text-transform: uppercase;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        padding: 40px 20px 10px;
     }
 
-    /* Content Layout */
+    .header h1 {
+        font-family: 'Schoolbell', cursive;
+        font-size: 3rem;
+        color: #fffbea;
+        margin: 0;
+    }
+
     .content {
-        padding: 20px;
         max-width: 1100px;
-        margin: 20px auto;
-        line-height: 1.6;
+        margin: 30px auto;
+        padding: 0 20px;
     }
 
-    /* Two-column layout with flexibility */
-    .row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-        justify-content: center;
+    .section {
+        background-color: rgba(0, 0, 0, 0.2);
+        border: 2px dashed #fffbea;
+        border-radius: 16px;
+        padding: 25px;
+        margin-bottom: 30px;
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.08);
     }
 
-    .column {
-        display: flex; /* Make the content inside the column a horizontal layout */
-        gap: 20px; /* Add spacing between the image and text */
-        align-items: center; /* Align items vertically in the center */
-        background-color: #fbe9e7; /* Box background */
-        padding: 20px;
-        border-radius: 12px;
-        border: 2px solid #8d6e63;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    /* Image styling for consistency */
-    .column img {
-        flex-shrink: 0; /* Prevent the image from shrinking */
-        width: 150px; /* Fixed image width */
-        height: auto; /* Maintain aspect ratio */
-        border-radius: 8px;
-        border: 2px solid #8d6e63;
-    }
-
-    /* Title Styling for Columns */
-    .column h2 {
-        color: #4b3f35;
-        font-size: 20px;
-        border-bottom: 2px solid #8d6e63;
-        padding-bottom: 5px;
+    .section h2 {
+        font-size: 1.8rem;
+        color: #fffbea;
+        border-bottom: 1px solid #fffbea;
+        padding-bottom: 8px;
         margin-bottom: 15px;
     }
 
-    /* Links or additional text */
-    .column p {
-        margin: 10px 0;
-        color: #4b3f35;
-    }
-    .column div {
-        flex: 1; /* Allow the text to take the remaining space */
+    .section p {
+        font-size: 1.1rem;
+        color: #eaeaea;
+        line-height: 1.6;
     }
 
-    /* Responsive Design */
+    .section img {
+        width: 100%;
+        max-width: 300px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        border: 2px solid #fffbea;
+    }
+
+    .team-member {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .team-member img {
+        width: 150px;
+        border-radius: 12px;
+        border: 2px solid #fffbea;
+    }
+
+    .team-member div {
+        flex: 1;
+    }
+
+    .team-member h3 {
+        margin-top: 0;
+        font-size: 1.5rem;
+        color: #fffbea;
+        border-bottom: 1px dashed #fffbea;
+        margin-bottom: 8px;
+    }
+
     @media (max-width: 768px) {
-        .column {
-            flex-direction: column; /* Stack the image and text on smaller screens */
+        .team-member {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
         }
 
-        .column img {
-            width: 100%; /* Make the image full-width on small screens */
+        .team-member img {
+            width: 100px;
         }
+
+        .ollama-content {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .ollama-content img {
+            margin-bottom: 20px;
+        }
+    }
+
+    .ollama-content {
+        display: flex;
+        gap: 25px;
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .ollama-content img {
+        width: 200px;
+        flex-shrink: 0;
+        border-radius: 10px;
+        border: 2px solid #fffbea;
+        margin-bottom: 0;
+    }
+
+    .ollama-content div {
+        flex: 1;
+        min-width: 250px;
+    }
+
+    .thinkeat-content {
+        display: flex;
+        gap: 25px;
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .thinkeat-content img {
+        width: 200px;
+        flex-shrink: 0;
+        border-radius: 10px;
+        border: 2px solid #fffbea;
     }
 </style>
 
-<!-- Page Content -->
 <div class="header">
     <h1>About Us</h1>
-</div> 
+</div>
 
 <div class="content">
-    <div class="row">
-        <!-- Column 1: What is ThinkEat -->
-        <div class="column">
-          <img src="https://static.independent.co.uk/s3fs-public/thumbnails/image/2020/01/22/12/dinner-table.jpg" alt="Dinner table">
-          <div>
-              <h2>What is ThinkEat?</h2>
-              <p>
-                  At ThinkEat, we empower individuals to transform their available 
-                  ingredients into delicious, easy-to-follow recipes using Meta's 
-                  Ollama
-                   models. Our mission is to help people make the most of the 
-                  food they have, reducing waste and promoting sustainable consumption.
-              </p>
-              <p>
-                  Food waste in America is a significant issue, with approximately 38% 
-                  of all food going unsold or uneaten each year, equating to 
-                  92 billion pounds of waste. By providing personalized recipes based 
-                  on the ingredients you already have, ThinkEat aims to reduce food waste 
-                  and help you save money. Join us in creating a more sustainable approach 
-                  to cooking and dining.
-              </p>
-          </div>
-      </div>
-    </div>
-
-    <div class="row">
-        <!-- Column 3: Meta Integration -->
-        <div class="column">
-            <h2>Powered by Meta's Ollama</h2>
-            <p>
-              ThinkEat is powered by Meta’s cutting-edge Ollama models, harnessing the latest advancements in AI to deliver a seamless and intelligent cooking experience. Our system takes your listed ingredients and dynamically searches for the most relevant and practical recipes, ensuring that every suggestion is both accessible and creative to our users.
-              Unlike traditional recipe searches, ThinkEat doesn’t just pull static results—it intelligently understands context, flavor profiles, and cooking techniques, curating personalized recommendations tailored specifically to your available ingredients. By leveraging Ollama’s ability to aggregate knowledge from across the web, we provide access to an extensive and ever-growing repertoire of recipes—from Michelin-star chefs to hidden gems from niche culinary communities.
-              This AI-driven approach allows ThinkEat to continuously refine its recommendations, offering a mix of classic comfort foods, quick weekday meals, and innovative dishes you may have never considered—all designed to minimize waste and maximize flavor. With ThinkEat, every meal is an opportunity to explore, create, and savor, using the power of AI to turn what’s in your kitchen into something extraordinary.
-            </p>
-            <img src="https://miro.medium.com/v2/resize:fit:695/1*UnUo_KuVO3gVcrwPqiAzAg.png" alt="Meta Logo" style="width: 50%; max-width: 300px; height: auto; border-radius: 8px;">
+    <div class="section">
+        <div class="thinkeat-content">
+            <img src="https://static.independent.co.uk/s3fs-public/thumbnails/image/2020/01/22/12/dinner-table.jpg" alt="Dinner table">
+            <div>
+                <h2>What is ThinkEat?</h2>
+                <p>At ThinkEat, we empower individuals to transform their available ingredients into delicious, easy-to-follow recipes using Meta's Ollama models. Our mission is to help people make the most of the food they have, reducing waste and promoting sustainable consumption.</p>
+                <p>Food waste in America is a significant issue, with approximately 38% of all food going unsold or uneaten each year, equating to 92 billion pounds of waste. By providing personalized recipes based on the ingredients you already have, ThinkEat aims to reduce food waste and help you save money. Join us in creating a more sustainable approach to cooking and dining.</p>
+            </div>
         </div>
     </div>
 
-    <div class="row">
-        <!-- Column 4: The Team -->
-        <div class="column">
-            <h2>Meet the Team</h2>
-            <div class="team-member">
-                <img src="https://media.licdn.com/dms/image/v2/D4E03AQHV53mzjbu0ww/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1701106315853?e=2147483647&v=beta&t=ml_pY5dn-sOyRgi_GJb4XqOl87tQNYDkwM0QAcSdbJY" alt="Mitchel Storm">
-                <div>
-                    <h3>Mitchel Storm</h3>
-                    <p>Mitchel Storm (20, He/Him) is pursuing a degree in Computer Science. With a unique sense of humor and a curiosity for the unknown, Mitchel’s ultimate goal is to enjoy a cup of coffee with the cosmic entity Yog-Sothoth.</p>
-                </div>
+
+    <div class="section ollama-section">
+        <h2>Powered by Meta's Ollama</h2>
+        <div class="ollama-content">
+            <img src="https://miro.medium.com/v2/resize:fit:695/1*UnUo_KuVO3gVcrwPqiAzAg.png" alt="Meta Logo">
+            <div>
+                <p>ThinkEat is powered by Meta’s cutting-edge Ollama models, harnessing the latest advancements in AI to deliver a seamless and intelligent cooking experience. Our system takes your listed ingredients and dynamically searches for the most relevant and practical recipes, ensuring that every suggestion is both accessible and creative to our users.</p>
+                <p>Unlike traditional recipe searches, ThinkEat doesn’t just pull static results—it intelligently understands context, flavor profiles, and cooking techniques, curating personalized recommendations tailored specifically to your available ingredients. By leveraging Ollama’s ability to aggregate knowledge from across the web, we provide access to an extensive and ever-growing repertoire of recipes—from Michelin-star chefs to hidden gems from niche culinary communities.</p>
+                <p>This AI-driven approach allows ThinkEat to continuously refine its recommendations, offering a mix of classic comfort foods, quick weekday meals, and innovative dishes you may have never considered—all designed to minimize waste and maximize flavor. With ThinkEat, every meal is an opportunity to explore, create, and savor, using the power of AI to turn what’s in your kitchen into something extraordinary.</p>
             </div>
-            <div class="team-member">
-                <img src="/static/images/Jeffrey.jpeg" alt="Jeffrey Leman">
-                <div>
-                    <h3>Jeffrey Leman</h3>
-                    <p>Jeffrey Leman (19, He/Him) is a Computer Science major still exploring his focus within the field. He has a passion for adventure and dreams of traveling abroad to experience diverse cultures and savor a wide variety of cuisines.</p>
-                </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Meet the Team</h2>
+
+        <div class="team-member">
+            <img src="https://media.licdn.com/dms/image/v2/D4E03AQHV53mzjbu0ww/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1701106315853?e=2147483647&v=beta&t=ml_pY5dn-sOyRgi_GJb4XqOl87tQNYDkwM0QAcSdbJY" alt="Mitchel Storm">
+            <div>
+                <h3>Mitchel Storm</h3>
+                <p>Mitchel Storm (20, He/Him) is pursuing a degree in Computer Science. With a unique sense of humor and a curiosity for the unknown, Mitchel’s ultimate goal is to enjoy a cup of coffee with the cosmic entity Yog-Sothoth.</p>
             </div>
-            <div class="team-member">
-                <img src="/static/images/Mackintosh.jpeg" alt="Dea Sustaita">
-                <div>
-                    <h3>Dea Sustaita</h3>
-                    <p>Dea Sustaita (19, he/they) is a Computer Science major with a focus on Artificial Intelligence and Machine Learning. Dea dreams of owning a game studio to bring their own games to life, alongside aspirations of opening a restaurant and sharing their home with many cats.</p>
-                </div>
+        </div>
+
+        <div class="team-member">
+            <img src="/static/images/Jeffrey.jpeg" alt="Jeffrey Leman">
+            <div>
+                <h3>Jeffrey Leman</h3>
+                <p>Jeffrey Leman (19, He/Him) is a Computer Science major still exploring his focus within the field. He has a passion for adventure and dreams of traveling abroad to experience diverse cultures and savor a wide variety of cuisines.</p>
+            </div>
+        </div>
+
+        <div class="team-member">
+            <img src="/static/images/Mackintosh.jpeg" alt="Dea Sustaita">
+            <div>
+                <h3>Dea Sustaita</h3>
+                <p>Dea Sustaita (19, he/they) is a Computer Science major with a focus on Artificial Intelligence and Machine Learning. Dea dreams of owning a game studio to bring their own games to life, alongside aspirations of opening a restaurant and sharing their home with many cats.</p>
             </div>
         </div>
     </div>

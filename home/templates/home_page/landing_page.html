@@ -1,58 +1,107 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Landing Page{% endblock %}
+{% block title %}ThinkEat - Home{% endblock %}
 
 {% block body %}
-    {% include 'navbar.html' %}
-    <div>
-        {% block content %}{% endblock %}
-    </div>
+{% include 'navbar.html' %}
+<link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Schoolbell&display=swap" rel="stylesheet">
+
 <style>
-    .container {
-        cursor: url('/static/cursors/custom_cursor.cur'), auto;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 10px;
-    }
-    
-    .container img {
-       
-        width: 200px; /* Adjust width as needed */
-        height: auto; /* Maintains aspect ratio */
-        border-radius: 10px; /* Optional: Adds rounded corners */
-        object-fit: cover; /* Ensures images fit within given dimensions */
+    body {
+        background-color: #2f2f2f;
+        background-image: url('https://www.transparenttextures.com/patterns/asfalt-light.png');
+        color: #f8f8f8;
+        font-family: 'Indie Flower', cursive;
+        margin: 0;
+        padding: 0;
     }
 
-    .content {
-        
+    .hero {
         text-align: center;
-        width: 100%;
-        margin-top: 20px;
+        padding: 60px 20px 30px;
     }
 
-    .content h1 {
-        font-size: 2rem;
+    .hero h1 {
+        font-family: 'Schoolbell', cursive;
+        font-size: 3.5rem;
+        color: #fffbea;
+        margin-bottom: 10px;
+    }
+
+    .hero p {
+        font-size: 1.4rem;
+        color: #eaeaea;
+        margin-bottom: 25px;
+    }
+
+    .hero a {
+        display: inline-block;
+        margin: 10px;
+        padding: 10px 24px;
+        border: 2px solid #fff;
+        color: #fff;
+        text-decoration: none;
+        font-size: 1.1rem;
+        border-radius: 8px;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    .hero a:hover {
+        background-color: #fff;
+        color: #2f2f2f;
+    }
+
+    .gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 25px;
+        padding: 40px 60px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .gallery img {
+    width: 100%;
+    height: 220px; 
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.08);
+    filter: grayscale(15%) contrast(1.1);
+    transition: transform 0.3s, filter 0.3s;
+}
+
+
+    .gallery img:hover {
+        transform: scale(1.04);
+        filter: grayscale(0%) contrast(1.2);
+    }
+
+    footer {
+        text-align: center;
+        padding: 20px;
+        font-size: 0.9rem;
+        color: #aaa;
     }
 </style>
 
-<div class="container">
-    <img src="https://images.pexels.com/photos/1565982/pexels-photo-1565982.jpeg" alt="food 1">
-    <img src="https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg" alt="food 2">
-    <img src="https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg" alt="food 3">
-    <img src="https://images.pexels.com/photos/660282/pexels-photo-660282.jpeg" alt="food 4">
-    
-    <div class="content">
-        <h1>ThinkEat</h1>
-        <p>We Think, You Cook.</p>
-        <a href="{% url 'login' %}">Login</a>
-        <a href="{% url 'about' %}">About</a>
-    </div>
-
-    <img src="https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg" alt="food 5">
-    <img src="https://images.pexels.com/photos/376464/pexels-photo-376464.jpeg" alt="food 6">
-    <img src="https://images.pexels.com/photos/660282/pexels-photo-660282.jpeg" alt="food 7">
-    <img src="https://images.pexels.com/photos/1565982/pexels-photo-1565982.jpeg" alt="food 8">
+<div class="hero">
+    <h1>ThinkEat</h1>
+    <p>We Think, You Cook.</p>
+    <a href="{% url 'login' %}">Login</a>
+    <a href="{% url 'about' %}">About</a>
 </div>
+
+<div class="gallery">
+    <img src="https://images.unsplash.com/photo-1550547660-d9450f859349" alt="artisan burger">
+    <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38" alt="loaded burger with fries">
+    <img src="https://helios-i.mashable.com/imagery/articles/03WVkIuopVEuo8QtYXp9p9n/hero-image.fill.size_1200x1200.v1740593795.jpg" alt="stacked milkshake">
+    <img src="https://img.hellofresh.com/w_3840,q_auto,f_auto,c_fill,fl_lossy/hellofresh_s3/image/cherry-balsamic-sirloin-f4dc0fd2.jpg" alt="burger and soda aesthetic">
+    <img src="https://img.hellofresh.com/w_3840,q_auto,f_auto,c_fill,fl_lossy/hellofresh_s3/image/611d22ff1fc432111c386609-7da1d170.jpg" alt="retro burger styling">
+    
+</div>
+
+<footer>
+    © 2025 ThinkEat. We Think, You Cook.
+</footer>
 {% endblock %}
