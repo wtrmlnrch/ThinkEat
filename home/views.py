@@ -41,17 +41,23 @@ def register(request):
         last_name = request.POST.get('last_name')
         username = request.POST.get('username')
         password = request.POST.get('password')
-        email = request.POST.get('email_address')
+        email = request.POST.get('email_address')  
 
-        # Check if username already exists
+       
+        if not all([first_name, last_name, username, password, email]):
+            messages.error(request, "All fields are required!")
+            return render(request, 'registration/registration.html', status=400)
         if CustomUser.objects.filter(username=username).exists():
             messages.error(request, "Username already taken!")
-            return redirect('/register/')
+            return render(request, 'registration/registration.html', status=400)
 
-        # Create the user and its profile
-        CustomUser.objects.create_user(username=username, password=password, email=email, 
-                                       first_name=first_name, last_name=last_name)
-
+        CustomUser.objects.create_user(
+            username=username,
+            password=password,
+            email=email,
+            first_name=first_name,
+            last_name=last_name
+        )
         messages.success(request, "Account created successfully! Please log in.")
         return redirect('/login/')
 
