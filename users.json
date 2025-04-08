@@ -4,16 +4,16 @@
   "pk": 1,
   "fields": {
     "password": "pbkdf2_sha256$870000$yPAc6NDRUYJgqoESxiPRwO$+C+DoKT/e3r9nuGBi9PSymVMumOB+ZnshbxECU75uP0=",
-    "last_login": "2025-03-25T20:10:22.370Z",
+    "last_login": "2025-04-08T19:28:45.219Z",
     "is_superuser": true,
     "username": "admin",
-    "first_name": "Dea",
-    "last_name": "Sustaita",
-    "email": "deasustaita@gmail.com",
+    "first_name": "admin",
+    "last_name": "admin",
+    "email": "admin@gmail.com",
     "is_staff": true,
     "is_active": true,
     "date_joined": "2025-03-25T19:31:08Z",
-    "birth_date": null,
+    "birth_date": "2025-04-08",
     "groups": [],
     "user_permissions": []
   }
@@ -23,7 +23,7 @@
   "pk": 5,
   "fields": {
     "password": "pbkdf2_sha256$870000$iiL4sEstxSbaYMOEfRg8Y3$ay4rMT0SUbtC5GYbm6WiL5lOL35QiYhgN1bvitqqp4s=",
-    "last_login": "2025-03-25T20:05:53.447Z",
+    "last_login": "2025-03-27T20:48:53.352Z",
     "is_superuser": false,
     "username": "dsustaita",
     "first_name": "Dea",
@@ -32,7 +32,7 @@
     "is_staff": false,
     "is_active": true,
     "date_joined": "2025-03-25T20:05:45.828Z",
-    "birth_date": null,
+    "birth_date": "2005-04-20",
     "groups": [],
     "user_permissions": []
   }
