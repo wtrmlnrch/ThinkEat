@@ -34,14 +34,23 @@
         {% endif %}
     </div>
 
+    
     <div class="recipe-input">
         <form method="POST" action="{% url 'chat' %}">
             {% csrf_token %}
+            <label for="mode-select">Mode:</label>
+                <select name="mode" id="mode-select" class="mode-select">
+                    <option value="ingredients" {% if mode == 'ingredients' %}selected{% endif %}>Ingredients</option>
+                    <option value="dish" {% if mode == 'dish' %}selected{% endif %}>Dish Name</option>
+                </select>
             <input type="text" name="prompt" placeholder="Type your message...">
             <button type="submit">Post</button>
             <button type="submit" name="more" value="1" class="more-button">More</button>
             <button type="submit" name="reset" value="1" class="reset-button">Reset</button>
         </form>
+    </div>
+    <div class="post-content warning">
+        {{ message.content }}
     </div>
     
 
@@ -61,6 +70,10 @@
         margin: 0;
         padding: 0;
     }
+        .warning {
+        color: #b30000;
+        font-weight: bold;
+    }
 
     .recipe-container {
         max-width: 900px;
@@ -72,6 +85,15 @@
                     0 6px 12px rgba(0, 0, 0, 0.4);
         border: 2px dashed rgba(255, 255, 255, 0.15);
     }
+        .mode-select {
+        margin-bottom: 10px;
+        padding: 8px;
+        font-size: 14px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        width: 200px;
+    }
+
 
     .recipe-header {
         font-size: 2.5rem;
