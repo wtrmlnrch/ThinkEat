@@ -37,10 +37,13 @@
     <div class="recipe-input">
         <form method="POST" action="{% url 'chat' %}">
             {% csrf_token %}
-            <input type="text" name="prompt" placeholder="Type your message..." required>
+            <input type="text" name="prompt" placeholder="Type your message...">
             <button type="submit">Post</button>
+            <button type="submit" name="more" value="1" class="more-button">More</button>
+            <button type="submit" name="reset" value="1" class="reset-button">Reset</button>
         </form>
     </div>
+    
 
     {% if error %}
         <div class="error-message">
@@ -114,7 +117,7 @@
     }
 
     .recipe-input input[type="text"] {
-        width: calc(100% - 110px);
+        width: calc(100% - 330px);
         padding: 12px;
         font-size: 1rem;
         border: 2px solid #ddd;
@@ -123,21 +126,46 @@
         color: white;
     }
 
-    .recipe-input button {
+    .recipe-input button,
+    .recipe-input .reset-button,
+    .recipe-input .more-button {
         padding: 12px 20px;
         margin-left: 10px;
-        background-color: #ffb347;
-        color: #2f2f2f;
         font-weight: bold;
         font-family: inherit;
         border: none;
         border-radius: 8px;
         cursor: pointer;
+        font-size: 1rem;
         transition: background-color 0.3s ease;
+    }
+
+    .recipe-input button {
+        background-color: #ffb347;
+        color: #2f2f2f;
     }
 
     .recipe-input button:hover {
         background-color: #ffaa33;
+    }
+
+    .recipe-input .reset-button {
+        background-color: #ccc;
+        color: #333;
+        border: 1px solid #999;
+    }
+
+    .recipe-input .reset-button:hover {
+        background-color: #aaa;
+    }
+
+    .recipe-input .more-button {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    .recipe-input .more-button:hover {
+        background-color: #0056b3;
     }
 
     .error-message {
