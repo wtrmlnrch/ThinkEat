@@ -15,10 +15,6 @@ def thinkeat(request):
     return render(request, 'thinkeat.html')
 
 def my_account(request):
-    print("Request Method:", request.method)
-    request.session['test'] = 'Hello, world!'  # Store a test variable in the session
-    print("Session variable:", request.session.get('test'))  # Debugging line
-    
     if request.method == 'POST':
         form = CustomUserUpdateForm(request.POST, instance=request.user)
         if form.is_valid() and form.has_changed():
