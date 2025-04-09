@@ -13,7 +13,7 @@
 
 <div class="recipe-container">
     <div class="recipe-header">
-        Speak to ThinkEat!
+        Speak to Braxton!
     </div>
 
     <div class="recipe-posts">
@@ -21,7 +21,7 @@
             {% for message in chat_history %}
                 <div class="recipe-post">
                     <div class="post-author">
-                        {% if message.role == 'user' %}You{% else %}AI{% endif %}
+                        {% if message.role == 'user' %}You{% else %}Braxton{% endif %}
                     </div>
                     <div class="post-content">
                         {{ message.content }}
