@@ -23,7 +23,7 @@ def format_recipe_list(response_text):
 
     recipe_lines = re.findall(r"^\s*(\d+)\.\s*(.+)", response_text, re.MULTILINE)
     if recipe_lines:
-        formatted = "Here are 5 recipe ideas:\n"
+        formatted = "Here are a couple of recipe ideas:\n"
         for num, title in recipe_lines:
             formatted += f"    {num}. {title}\n"
         formatted += "\nPress the number or enter the title of the recipe you'd like instructions for.\nPress the \"More\" button to get more recipe suggestions."
@@ -34,7 +34,6 @@ def format_recipe_list(response_text):
 @csrf_exempt
 def chat_view(request):
     if request.method == "POST":
-        # Mode handling
         mode = request.POST.get('mode', request.session.get('mode', 'ingredients'))
         request.session['mode'] = mode
 
@@ -79,48 +78,41 @@ def chat_view(request):
         recipe_map = session.get("recipe_map", {})
         chat_history = []
 
-        # Handle mode
+        # Ingredient mode logic
         if mode == 'ingredients':
             if ',' in user_input and lower_input != "more" and not lower_input.isdigit():
-                # Valid ingredient input
                 session["last_ingredients"] = user_input
+                session["has_submitted_ingredients"] = True
                 prompt_to_send = INSTRUCTION + user_input
                 raw_response = generate_text(prompt_to_send)
                 formatted_response, recipe_map = format_recipe_list(raw_response)
                 session["recipe_map"] = recipe_map
 
-            elif ',' not in user_input and len(user_input.split()) <= 5:
-                # Looks like a dish name — recommend switching
+            elif ',' not in user_input and len(user_input.split()) <= 5 and not session.get("has_submitted_ingredients", False):
+                # Warn only on the first attempt
                 formatted_response = (
-                    "Looks like you entered a dish name.\n\n"
-                    "               Try switching to Dish Name Mode using the dropdown above."
+                    "It looks like you entered a dish name.\n\n"
+                    "Try switching to Dish Name Mode using the dropdown above."
                 )
 
-
             elif user_input in recipe_map:
-                # User entered number from prior list
                 title = recipe_map[user_input]
                 prompt_to_send = f"Make me a simple recipe for {title}"
                 formatted_response = generate_text(prompt_to_send)
 
             else:
-                # Treat as fallback dish name
                 prompt_to_send = f"Make me a simple recipe for {user_input}"
                 formatted_response = generate_text(prompt_to_send)
 
         elif mode == 'dish':
             if ',' in user_input:
-                # Looks like ingredient input — suggest switching
                 formatted_response = (
-                    "Looks like you entered a list of ingredients.\n\n"
-                    "               Try switching to Ingredients Mode using the dropdown above."
+                    "It looks like you entered a list of ingredients.\n\n"
+                    "Try switching to Ingredients Mode using the dropdown above."
                 )
-
             else:
-                # Normal dish request
                 prompt_to_send = f"Make me a simple recipe for {user_input}"
                 formatted_response = generate_text(prompt_to_send)
-
 
         # Add to chat history
         chat_history.append({
