@@ -14,6 +14,10 @@ def about(request):
 def thinkeat(request):
     return render(request, 'thinkeat.html')
 
+def tutorial_view(request):
+    return render(request, 'home_page/tutorial.html')
+
+
 def my_account(request):
     if request.method == 'POST':
         form = CustomUserUpdateForm(request.POST, instance=request.user)
