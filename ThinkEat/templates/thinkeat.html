@@ -38,16 +38,24 @@
     <div class="recipe-input">
         <form method="POST" action="{% url 'chat' %}">
             {% csrf_token %}
-            <label for="mode-select">Mode:</label>
-                <select name="mode" id="mode-select" class="mode-select">
-                    <option value="ingredients" {% if mode == 'ingredients' %}selected{% endif %}>Ingredients</option>
-                    <option value="dish" {% if mode == 'dish' %}selected{% endif %}>Dish Name</option>
-                </select>
-            <input type="text" name="prompt" placeholder="Type your message...">
-            <button type="submit">Post</button>
-            <button type="submit" name="more" value="1" class="more-button">More</button>
-            <button type="submit" name="reset" value="1" class="reset-button">Reset</button>
-            <button type="submit" name="favorite" value="1" class="favorite-button">Favorite</button>
+            <div class="input-row">
+                <input type="text" name="prompt" placeholder="Type your message...">
+            </div>
+            <div class="controls-row">
+                <div class="mode-select-container">
+                    <label for="mode-select">Mode:</label>
+                    <select name="mode" id="mode-select" class="mode-select">
+                        <option value="ingredients" {% if mode == 'ingredients' %}selected{% endif %}>Ingredients</option>
+                        <option value="dish" {% if mode == 'dish' %}selected{% endif %}>Dish Name</option>
+                    </select>
+                </div>
+                <div class="buttons-container">
+                    <button type="submit">Post</button>
+                    <button type="submit" name="more" value="1" class="more-button">More</button>
+                    <button type="submit" name="reset" value="1" class="reset-button">Reset</button>
+                    <button type="submit" name="favorite" value="1" class="favorite-button">Favorite</button>
+                </div>
+            </div>
         </form>
     </div>
     <div class="post-content warning">
@@ -71,7 +79,7 @@
         margin: 0;
         padding: 0;
     }
-        .warning {
+    .warning {
         color: #b30000;
         font-weight: bold;
     }
@@ -86,15 +94,6 @@
                     0 6px 12px rgba(0, 0, 0, 0.4);
         border: 2px dashed rgba(255, 255, 255, 0.15);
     }
-        .mode-select {
-        margin-bottom: 10px;
-        padding: 8px;
-        font-size: 14px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-        width: 200px;
-    }
-
 
     .recipe-header {
         font-size: 2.5rem;
@@ -139,8 +138,15 @@
         border-radius: 10px;
     }
 
+    .input-row {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 15px;
+    }
+
     .recipe-input input[type="text"] {
-        width: calc(100% - 330px);
+        width: 100%;
+        max-width: 800px;
         padding: 12px;
         font-size: 1rem;
         border: 2px solid #ddd;
@@ -149,11 +155,40 @@
         color: white;
     }
 
+    .controls-row {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .mode-select-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .mode-select {
+        padding: 8px;
+        font-size: 14px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        width: 200px;
+        background-color: rgba(255, 255, 255, 0.1);
+        color: white;
+    }
+
+    .buttons-container {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
     .recipe-input button,
     .recipe-input .reset-button,
     .recipe-input .more-button {
         padding: 12px 20px;
-        margin-left: 10px;
         font-weight: bold;
         font-family: inherit;
         border: none;
@@ -196,6 +231,22 @@
         font-size: 1rem;
         margin-top: 10px;
         text-align: center;
+    }
+
+    @media (max-width: 768px) {
+        .buttons-container {
+            flex-direction: column;
+            width: 100%;
+        }
+        
+        .recipe-input button {
+            width: 100%;
+        }
+        
+        .mode-select-container {
+            flex-direction: column;
+            align-items: center;
+        }
     }
 </style>
 {% endblock %}

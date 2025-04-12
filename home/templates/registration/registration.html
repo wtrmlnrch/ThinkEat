@@ -1,149 +1,166 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Register{% endblock %}
 
 {% block body %}
-    <div>
-        {% block content %}{% endblock %}
-    </div>
+{% include 'navbar.html' %}
+<link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Schoolbell&display=swap" rel="stylesheet">
 
-<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-image: url(https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1);
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .login-container {
-            background-color: rgb(23, 23, 23);
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
-            text-align: center;
-        }
-        h1 {
-            margin-bottom: 20px;
-            color: #c9c9c9;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: center; 
-        }
-        form p {
-            margin: 10px 0;
-            width: 100%; 
-            text-align: center;
-        }
-        .form-group {
-            width: 100%;
-            text-align: left;
-        }
-        label {
-            font-weight: bold;
-            margin-bottom: 5px;
-            display: block;
-            text-align: center; 
-            color: #c9c9c9;
-        }
-        input[type="text"], input[type="password"], input[type="first_name"], input[type="last_name"], input[type="email"],input[type="date"] {
-            width: 94%; 
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            text-align: center; 
-        }
-        button {
-            background-color: #467932;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            width: 100%; 
-            margin-top: 10px; 
-        }
-        button:hover {
-            background-color: #066c16;
-        }
-        .alert {
-            margin-bottom: 10px;
-            border-radius: 5px;
-            font-size: 20px;
-            text-align: center;
-            color:#97daec;
-        }
+<style>
+    body {
+        background-color: #2f2f2f;
+        background-image: url('https://www.transparenttextures.com/patterns/asfalt-light.png');
+        color: #f8f8f8;
+        font-family: 'Indie Flower', cursive;
+        margin: 0;
+        padding: 0;
+    }
 
-    </style>
-</head>
-<body>
-    <div class="login-container">
-        <h1>Login</h1>
+    .header {
+        text-align: center;
+        padding: 40px 20px 10px;
+    }
 
+    .header h1 {
+        font-family: 'Indie Flower', cursive;
+        font-size: 3rem;
+        color: #fffbea;
+        margin: 0;
+    }
 
+    .content {
+        max-width: 500px;
+        margin: 30px auto;
+        padding: 0 20px;
+    }
+
+    .register-container {
+        background-color: rgba(0, 0, 0, 0.2);
+        border: 2px dashed #fffbea;
+        border-radius: 16px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.08);
+    }
+
+    .register-container h1 {
+        font-family: 'Indie Flower', cursive;
+        font-size: 2.5rem;
+        color: #fffbea;
+        margin-top: 0;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 1.1rem;
+        color: #fffbea;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 10px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border: 1px solid #fffbea;
+        border-radius: 8px;
+        color: #f8f8f8;
+        font-family: 'Indie Flower', cursive;
+        font-size: 1rem;
+    }
+
+    input[type="date"]::-webkit-calendar-picker-indicator {
+        filter: invert(1);
+    }
+
+    button {
+        background-color: transparent;
+        color: #fffbea;
+        border: 2px solid #fffbea;
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-family: 'Indie Flower', cursive;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.3s;
+        width: 100%;
+    }
+
+    button:hover {
+        background-color: #fffbea;
+        color: #2f2f2f;
+    }
+
+    .alert {
+        color: #97daec;
+        margin-bottom: 20px;
+        text-align: center;
+        font-size: 1.1rem;
+    }
+</style>
+
+<div class="header">
+    <h1>Join ThinkEat!</h1>
+</div>
+
+<div class="content">
+    <div class="register-container">
         {% if messages %}
-        <div class="alert {% for message in messages %}alert-{{ message.tags }}{% endfor %}" role="alert">
+        <div class="alert">
             {% for message in messages %}
-            <span id="message-content">{{ message }}</span>
+            {{ message }}
             {% endfor %}
         </div>
-
-        <script>
-            let message = document.getElementById("message-content").innerText;
-            if (message === "Account created successfully!") {  // Check for specific message
-                setTimeout(function() {
-                    window.location.href = "/landing_page/";  // Redirect after 3 seconds
-                }, 1000);
-            }
-        </script>
         {% endif %}
 
-
+        <h1>Register</h1>
         <form method="post">
             {% csrf_token %}
             <div class="form-group">
                 <label for="first_name">First Name</label>
-                <input type="first_name" class="form-control" name="first_name" id="first_name" required>
-            </div>  
+                <input type="text" name="first_name" id="first_name" required>
+            </div>
             <div class="form-group">
                 <label for="last_name">Last Name</label>
-                <input type="last_name" class="form-control" name="last_name" id="last_name" required>
+                <input type="text" name="last_name" id="last_name" required>
             </div>
             <div class="form-group">
                 <label for="birth_date">Birth Date</label>
-                <input type="date" class="form-control" name="birth_date" id="birth_date" required>
+                <input type="date" name="birth_date" id="birth_date" required>
             </div>
             <div class="form-group">
-                <label for="email_address">Email Adress</label>
-                <input type="email" class="form-control" name="email_address" id="email_address" required>
-            </div>  
+                <label for="email_address">Email Address</label>
+                <input type="email" name="email_address" id="email_address" required>
+            </div>
             <div class="form-group">
                 <label for="username">Username</label>
-                <input type="text" class="form-control" name="username" id="username" required>
+                <input type="text" name="username" id="username" required>
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" class="form-control" name="password" id="password" required>
-            </div>            
-
-            <button type="submit">Submit</button>
+                <input type="password" name="password" id="password" required>
+            </div>
             
+            <button type="submit">Submit</button>
         </form>
     </div>
-</body>
+</div>
 
-</html>
+{% if messages %}
+<script>
+    let message = document.querySelector(".alert").innerText;
+    if (message.includes("Account created successfully")) {
+        setTimeout(function() {
+            window.location.href = "/landing_page/";
+        }, 1000);
+    }
+</script>
+{% endif %}
+
 {% endblock %}
