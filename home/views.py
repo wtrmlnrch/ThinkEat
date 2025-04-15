@@ -17,6 +17,9 @@ def thinkeat(request):
 def tutorial_view(request):
     return render(request, 'home_page/tutorial.html')
 
+def secret_page(request):
+    return render(request, 'home_page/secret.html')
+
 
 def my_account(request):
     if request.method == 'POST':
