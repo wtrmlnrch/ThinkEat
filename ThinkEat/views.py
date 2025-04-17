@@ -94,7 +94,7 @@ def chat_view(request):
 
         # Handle Favorite → Download PDF
         if 'favorite' in request.POST:
-            recipe_title = request.POST.get("recipe_title", "My_Recipe")
+            recipe_title = request.session.get("last_recipe_title", "My_Recipe")
             recipe_content = request.session.get("last_response", "No recipe content found.")
             return generate_pdf(recipe_title, recipe_content)
 
@@ -160,11 +160,15 @@ def chat_view(request):
                 prompt_to_send = f"Make me a simple recipe for {title}"
                 formatted_response = generate_text(prompt_to_send)
                 session["last_response"] = formatted_response
+                session["last_recipe_title"] = title if user_input in recipe_map else user_input
+
 
             else:
                 prompt_to_send = f"Make me a simple recipe for {user_input}"
                 formatted_response = generate_text(prompt_to_send)
                 session["last_response"] = formatted_response
+                session["last_recipe_title"] = title if user_input in recipe_map else user_input
+
 
         elif mode == 'dish':
             if ',' in user_input:
@@ -176,6 +180,8 @@ def chat_view(request):
                 prompt_to_send = f"Make me a simple recipe for {user_input}"
                 formatted_response = generate_text(prompt_to_send)
                 session["last_response"] = formatted_response
+                session["last_recipe_title"] = title if user_input in recipe_map else user_input
+
 
         chat_history.append({
             'role': 'user',
