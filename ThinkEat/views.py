@@ -69,7 +69,7 @@ def chat_view(request):
         mode = request.POST.get('mode', request.session.get('mode', 'ingredients'))
         request.session['mode'] = mode
 
-        if 'favorite' in request.POST:
+        if 'download' in request.POST:
             recipe_title = request.session.get("last_recipe_title", "My_Recipe")
             recipe_content = request.session.get("last_response", "No recipe content found.")
             return generate_pdf(recipe_title, recipe_content)
