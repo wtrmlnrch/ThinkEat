@@ -1,9 +1,14 @@
 import re
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from .ollama_service import generate_text
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 from datetime import datetime
+from django.contrib import messages
+from .models import SavedRecipe
+from io import BytesIO
+from xhtml2pdf import pisa
+
 
 INSTRUCTION = (
     "Here are a couple of different ingredients. I would like you to analyze them and give me name of 5 different recipes that anybody would be able to cook, "
@@ -14,6 +19,7 @@ INSTRUCTION = (
     "given that they exist. You don't need to use all the given ingredients as well. Remember, the next response is going to be either a number, a title of a recipe, or by pressing the \"More\" button. "
     "Give the instructions with the title or number associated with the listed recipe. The ingredients are as listed in a comma separated line: "
 )
+
 
 def format_recipe_list(response_text):
     failure_msg = "The given ingredients are unable to create and reasonable recipe"
@@ -31,11 +37,66 @@ def format_recipe_list(response_text):
 
     return response_text, {}
 
+
+def generate_pdf(recipe_title, recipe_content):
+    
+    processed_content = recipe_content.replace('\n', '<br>')
+
+    html = f"""
+    <html>
+        <head>
+            <meta charset="utf-8">
+            <title>{recipe_title}</title>
+            <style>
+                @page {{
+                    size: A4;
+                    margin: 1in;
+                }}
+                body {{
+                    font-family: Helvetica, Arial, sans-serif;
+                    font-size: 12pt;
+                }}
+                h1 {{
+                    text-align: center;
+                    margin-bottom: 20px;
+                }}
+                .content {{
+                    width: 90%;
+                    margin: 0 auto;
+                    white-space: pre-wrap;
+                    word-wrap: break-word;
+                    overflow-wrap: break-word;
+                }}
+            </style>
+        </head>
+        <body>
+            <h1>{recipe_title}</h1>
+            <div class="content">
+                {processed_content}
+            </div>
+        </body>
+    </html>
+    """
+    result = BytesIO()
+    pdf = pisa.pisaDocument(BytesIO(html.encode("UTF-8")), result)
+    if not pdf.err:
+        response = HttpResponse(result.getvalue(), content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename="{recipe_title}.pdf"'
+        return response
+    return HttpResponse("PDF generation failed", status=500)
+
+
 @csrf_exempt
 def chat_view(request):
     if request.method == "POST":
         mode = request.POST.get('mode', request.session.get('mode', 'ingredients'))
         request.session['mode'] = mode
+
+        # Handle Favorite → Download PDF
+        if 'favorite' in request.POST:
+            recipe_title = request.POST.get("recipe_title", "My_Recipe")
+            recipe_content = request.session.get("last_response", "No recipe content found.")
+            return generate_pdf(recipe_title, recipe_content)
 
         # Reset button
         if 'reset' in request.POST:
@@ -89,7 +150,6 @@ def chat_view(request):
                 session["recipe_map"] = recipe_map
 
             elif ',' not in user_input and len(user_input.split()) <= 5 and not session.get("has_submitted_ingredients", False):
-                # Warn only on the first attempt
                 formatted_response = (
                     "It looks like you entered a dish name.\n\n"
                     "Try switching to Dish Name Mode using the dropdown above."
@@ -99,10 +159,12 @@ def chat_view(request):
                 title = recipe_map[user_input]
                 prompt_to_send = f"Make me a simple recipe for {title}"
                 formatted_response = generate_text(prompt_to_send)
+                session["last_response"] = formatted_response
 
             else:
                 prompt_to_send = f"Make me a simple recipe for {user_input}"
                 formatted_response = generate_text(prompt_to_send)
+                session["last_response"] = formatted_response
 
         elif mode == 'dish':
             if ',' in user_input:
@@ -113,8 +175,8 @@ def chat_view(request):
             else:
                 prompt_to_send = f"Make me a simple recipe for {user_input}"
                 formatted_response = generate_text(prompt_to_send)
+                session["last_response"] = formatted_response
 
-        # Add to chat history
         chat_history.append({
             'role': 'user',
             'content': user_input,

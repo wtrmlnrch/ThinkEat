@@ -15,6 +15,13 @@
     <div class="recipe-header">
         Speak to Braxton!
     </div>
+    {% if messages %}
+        <div class="flash-messages">
+            {% for message in messages %}
+                <div class="alert alert-success">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
 
     <div class="recipe-posts">
         {% if chat_history %}
