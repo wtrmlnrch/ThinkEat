@@ -9,7 +9,6 @@ from .models import SavedRecipe
 from io import BytesIO
 from xhtml2pdf import pisa
 
-
 INSTRUCTION = (
     "Here are a couple of different ingredients. I would like you to analyze them and give me name of 5 different recipes that anybody would be able to cook, "
     "expect that I have the basic cooking utensils and ingredients like salt and pepper. Don't give comments besides a numbered list which only contains the title. "
@@ -19,7 +18,6 @@ INSTRUCTION = (
     "given that they exist. You don't need to use all the given ingredients as well. Remember, the next response is going to be either a number, a title of a recipe, or by pressing the \"More\" button. "
     "Give the instructions with the title or number associated with the listed recipe. The ingredients are as listed in a comma separated line: "
 )
-
 
 def format_recipe_list(response_text):
     failure_msg = "The given ingredients are unable to create and reasonable recipe"
@@ -37,43 +35,23 @@ def format_recipe_list(response_text):
 
     return response_text, {}
 
-
 def generate_pdf(recipe_title, recipe_content):
-    
     processed_content = recipe_content.replace('\n', '<br>')
-
     html = f"""
     <html>
         <head>
-            <meta charset="utf-8">
+            <meta charset=\"utf-8\">
             <title>{recipe_title}</title>
             <style>
-                @page {{
-                    size: A4;
-                    margin: 1in;
-                }}
-                body {{
-                    font-family: Helvetica, Arial, sans-serif;
-                    font-size: 12pt;
-                }}
-                h1 {{
-                    text-align: center;
-                    margin-bottom: 20px;
-                }}
-                .content {{
-                    width: 90%;
-                    margin: 0 auto;
-                    white-space: pre-wrap;
-                    word-wrap: break-word;
-                    overflow-wrap: break-word;
-                }}
+                @page {{ size: A4; margin: 1in; }}
+                body {{ font-family: Helvetica, Arial, sans-serif; font-size: 12pt; }}
+                h1 {{ text-align: center; margin-bottom: 20px; }}
+                .content {{ width: 90%; margin: 0 auto; white-space: pre-wrap; word-wrap: break-word; overflow-wrap: break-word; }}
             </style>
         </head>
         <body>
             <h1>{recipe_title}</h1>
-            <div class="content">
-                {processed_content}
-            </div>
+            <div class=\"content\">{processed_content}</div>
         </body>
     </html>
     """
@@ -85,20 +63,17 @@ def generate_pdf(recipe_title, recipe_content):
         return response
     return HttpResponse("PDF generation failed", status=500)
 
-
 @csrf_exempt
 def chat_view(request):
     if request.method == "POST":
         mode = request.POST.get('mode', request.session.get('mode', 'ingredients'))
         request.session['mode'] = mode
 
-        # Handle Favorite → Download PDF
         if 'favorite' in request.POST:
-            recipe_title = request.POST.get("recipe_title", "My_Recipe")
+            recipe_title = request.session.get("last_title", "My_Recipe")
             recipe_content = request.session.get("last_response", "No recipe content found.")
             return generate_pdf(recipe_title, recipe_content)
 
-        # Reset button
         if 'reset' in request.POST:
             request.session.flush()
             return render(request, 'thinkeat.html', {
@@ -107,7 +82,6 @@ def chat_view(request):
                 'mode': 'ingredients'
             })
 
-        # More button
         if 'more' in request.POST:
             last_ingredients = request.session.get("last_ingredients", "")
             if last_ingredients:
@@ -115,7 +89,6 @@ def chat_view(request):
                 raw_response = generate_text(prompt_to_send)
                 formatted_response, recipe_map = format_recipe_list(raw_response)
                 request.session["recipe_map"] = recipe_map
-
                 return render(request, 'thinkeat.html', {
                     'chat_history': [
                         {'role': 'user', 'content': '[Pressed More]', 'timestamp': datetime.now().strftime("%I:%M %p")},
@@ -131,7 +104,6 @@ def chat_view(request):
                     'mode': mode
                 })
 
-        # Main prompt input
         user_input = request.POST.get('prompt', '').strip()
         lower_input = user_input.lower()
         session = request.session
@@ -139,7 +111,6 @@ def chat_view(request):
         recipe_map = session.get("recipe_map", {})
         chat_history = []
 
-        # Ingredient mode logic
         if mode == 'ingredients':
             if ',' in user_input and lower_input != "more" and not lower_input.isdigit():
                 session["last_ingredients"] = user_input
@@ -160,11 +131,13 @@ def chat_view(request):
                 prompt_to_send = f"Make me a simple recipe for {title}"
                 formatted_response = generate_text(prompt_to_send)
                 session["last_response"] = formatted_response
+                session["last_title"] = title
 
             else:
                 prompt_to_send = f"Make me a simple recipe for {user_input}"
                 formatted_response = generate_text(prompt_to_send)
                 session["last_response"] = formatted_response
+                session["last_title"] = user_input
 
         elif mode == 'dish':
             if ',' in user_input:
@@ -176,6 +149,7 @@ def chat_view(request):
                 prompt_to_send = f"Make me a simple recipe for {user_input}"
                 formatted_response = generate_text(prompt_to_send)
                 session["last_response"] = formatted_response
+                session["last_title"] = user_input
 
         chat_history.append({
             'role': 'user',
