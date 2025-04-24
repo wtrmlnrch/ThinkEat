@@ -1,3 +1,5 @@
+The main branch is our most updated branch.
+
 What you need to run ThinkEat on your local machine:
   - Ollama
   - llama3.2 model
