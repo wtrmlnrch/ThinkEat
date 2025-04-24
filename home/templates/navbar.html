@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+    <!-- Navbar -->
+    {% if not request.path == '/login/' %}
+    <nav class="navbar">
+        <ul class="navi-list">
+            <li><a href="{% url 'tutorial' %}">Tutorial</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li class="centered-logo">
+                <a href="{% url 'landing_page' %}">
+                    <img src="{% static 'images/logo.png' %}" alt="Logo">
+                </a>
+            </li>
+            <li><a href="{% url 'thinkeat' %}">ThinkEat</a></li>
+            <li><a href="{% url 'my_account' %}">My Account</a></li>
+        </ul>
+    </nav>
+
+    <style>
+        .navbar {
+            background-image: url('https://img.freepik.com/premium-photo/dark-wooden-panels-rustic-blank-background-copy-space_92134-3381.jpg?semt=ais_hybrid&w=740'); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            padding: 10px 20px;
+            position: sticky;
+            height: 120px;
+            top: 0;
+            width: 100vw;
+            max-width: none;
+            z-index: 1000;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        .navi-list {
+            display: flex;
+            gap: 50px;
+            align-items: center;
+            padding: 0;
+            margin: 0;
+        }
+
+        .navi-list li {
+            flex: 1;
+            text-align: center;
+            list-style: none;
+            display: inline-block;
+        }
+
+        .navi-list li a {
+            text-decoration: none;
+            color: white;
+            font-family: 'Indie Flower', cursive;
+            font-size: 1.2em;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .navi-list li a:hover {
+            color: #e48007;
+        }
+
+        /* Centered Logo Styling */
+        .centered-logo {
+            flex: 0 0 auto;
+        }
+
+        .centered-logo img {
+            height: 100px;
+            width: auto;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            overflow-x: hidden;
+        }
+    </style>
+
+    {% endif %}
+
+    <!-- Page Content -->
+    <div>
+        {% block content %}{% endblock %}
+    </div>
+</body>
+
+</html>

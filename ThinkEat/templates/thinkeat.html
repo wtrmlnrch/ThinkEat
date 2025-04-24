@@ -1,157 +1,259 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ThinkEat recipe</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #e0e0e0;
-            margin: 0;
-            padding: 20px;
-            color: #333;
-        }
+{% extends 'base.html' %}
+{% load static %}
 
-        .recipe-container {
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-        }
+{% block title %}ThinkEat Recipe Chatlog{% endblock %}
 
-        .recipe-header {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: #333;
-            border-bottom: 2px solid #ccc;
-            padding-bottom: 10px;
-        }
+{% block body %}
+    {% include 'navbar.html' %}
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Schoolbell&display=swap" rel="stylesheet">
 
-        .recipe-post {
-            margin-bottom: 20px;
-            border: 1px solid #ddd;
-            background-color: #f9f9f9;
-            padding: 15px;
-            border-radius: 5px;
-        }
+    <div>
+        {% block content %}{% endblock %}
+    </div>
 
-        .recipe-post .post-author {
-            font-weight: bold;
-            color: #ff7b00;
-            margin-bottom: 10px;
-        }
-
-        .recipe-post .post-content {
-            font-size: 14px;
-            line-height: 1.5;
-            color: #555;
-        }
-
-        .recipe-post .post-date {
-            font-size: 12px;
-            color: #999;
-            margin-top: 10px;
-        }
-
-        .recipe-input {
-            margin-top: 20px;
-            padding: 15px;
-            background-color: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-
-        .recipe-input input[type="text"] {
-            width: calc(100% - 90px);
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 3px;
-            font-size: 14px;
-        }
-
-        .recipe-input button {
-            padding: 10px 20px;
-            background-color: #ff6200;
-            color: #fff;
-            border: 10px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 14px;
-            margin-top: 10px;
-            
-        }
-
-        .recipe-input button:hover {
-            background-color: #b36500;
-        }
-
-        .error-message {
-            color: #ff0000;
-            font-size: 14px;
-            margin-top: 10px;
-        }
-    </style>
-</head>
-<body>
-    <div class="recipe-container">
-        <div class="recipe-header">
-            Speak to ThinkEat!
+<div class="recipe-container">
+    <div class="recipe-header">
+        Speak to Braxton!
+    </div>
+    {% if messages %}
+        <div class="flash-messages">
+            {% for message in messages %}
+                <div class="alert alert-success">{{ message }}</div>
+            {% endfor %}
         </div>
+    {% endif %}
 
-       
-        <div class="recipe-posts">
-            {% if chat_history %}
-                {% for message in chat_history %}
-                    <div class="recipe-post">
-                        <div class="post-author">
-                            {% if message.role == 'user' %}You{% else %}AI{% endif %}
-                        </div>
-                        <div class="post-content">
-                            {{ message.content }}
-                        </div>
-                        <div class="post-date">
-                            {{ message.timestamp }} 
-                        </div>
-                    </div>
-                {% endfor %}
-            {% endif %}
-
-           
-            {% if response %}
+    <div class="recipe-posts">
+        {% if chat_history %}
+            {% for message in chat_history %}
                 <div class="recipe-post">
                     <div class="post-author">
-                        AI
+                        {% if message.role == 'user' %}You{% else %}Braxton{% endif %}
                     </div>
                     <div class="post-content">
-                        {{ response }}
+                        {{ message.content }}
                     </div>
                     <div class="post-date">
-                        Just now 
+                        {{ message.timestamp }} 
                     </div>
                 </div>
-            {% endif %}
-        </div>
-
-        
-        <div class="recipe-input">
-            <form method="POST" action="{% url 'chat' %}">
-                {% csrf_token %}
-                <input type="text" name="prompt" placeholder="Type your message..." required>
-                <button type="submit">Post</button>
-            </form>
-        </div>
-
-       
-        {% if error %}
-            <div class="error-message">
-                <strong>Error:</strong> {{ error }}
-            </div>
+            {% endfor %}
         {% endif %}
     </div>
-</body>
-</html>
+
+    
+    <div class="recipe-input">
+        <form method="POST" action="{% url 'chat' %}">
+            {% csrf_token %}
+            <div class="input-row">
+                <input type="text" name="prompt" placeholder="Type your message...">
+            </div>
+            <div class="controls-row">
+                <div class="mode-select-container">
+                    <label for="mode-select">Mode:</label>
+                    <select name="mode" id="mode-select" class="mode-select">
+                        <option value="ingredients" {% if mode == 'ingredients' %}selected{% endif %}>Ingredients</option>
+                        <option value="dish" {% if mode == 'dish' %}selected{% endif %}>Dish Name</option>
+                    </select>
+                </div>
+                <div class="buttons-container">
+                    <button type="submit">Post</button>
+                    <button type="submit" name="more" value="1" class="more-button">More</button>
+                    <button type="submit" name="reset" value="1" class="reset-button">Reset</button>
+                    <button type="submit" name="download" value="1" class="download-button">Download</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="post-content warning">
+        {{ message.content }}
+    </div>
+    
+
+    {% if error %}
+        <div class="error-message">
+            <strong>Error:</strong> {{ error }}
+        </div>
+    {% endif %}
+</div>
+
+<style>
+    body {
+        background-color: #2f2f2f;
+        background-image: url('https://www.transparenttextures.com/patterns/asfalt-light.png');
+        color: #f8f8f8;
+        font-family: 'Indie Flower', cursive;
+        margin: 0;
+        padding: 0;
+    }
+    .warning {
+        color: #b30000;
+        font-weight: bold;
+    }
+
+    .recipe-container {
+        max-width: 900px;
+        margin: 40px auto;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.08),
+                    0 6px 12px rgba(0, 0, 0, 0.4);
+        border: 2px dashed rgba(255, 255, 255, 0.15);
+    }
+
+    .recipe-header {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #fffbea;
+        font-family: 'Schoolbell', cursive;
+        margin-bottom: 25px;
+        text-align: center;
+    }
+
+    .recipe-post {
+        background-color: rgba(255, 255, 255, 0.07);
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .recipe-post .post-author {
+        font-weight: bold;
+        color: #ffb347;
+        margin-bottom: 8px;
+    }
+
+    .recipe-post .post-content {
+        font-size: 1.1rem;
+        line-height: 1.5;
+        color: #f0f0f0;
+        white-space: pre-wrap;
+    }
+
+    .recipe-post .post-date {
+        font-size: 0.9rem;
+        color: #aaa;
+        margin-top: 10px;
+    }
+
+    .recipe-input {
+        margin-top: 30px;
+        padding: 20px;
+        background-color: rgba(255,255,255,0.05);
+        border-radius: 10px;
+    }
+
+    .input-row {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 15px;
+    }
+
+    .recipe-input input[type="text"] {
+        width: 100%;
+        max-width: 800px;
+        padding: 12px;
+        font-size: 1rem;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        background-color: rgba(255, 255, 255, 0.1);
+        color: white;
+    }
+
+    .controls-row {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .mode-select-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .mode-select {
+        padding: 8px;
+        font-size: 14px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        width: 200px;
+        background-color: rgba(255, 255, 255, 0.1);
+        color: white;
+    }
+
+    .buttons-container {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .recipe-input button,
+    .recipe-input .reset-button,
+    .recipe-input .more-button {
+        padding: 12px 20px;
+        font-weight: bold;
+        font-family: inherit;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.3s ease;
+    }
+
+    .recipe-input button {
+        background-color: #ffb347;
+        color: #000000;
+    }
+
+    .recipe-input button:hover {
+        background-color: #ffaa33;
+    }
+
+    .recipe-input .reset-button {
+        background-color: #ffb347;
+        color: #000000;
+        border: 1px solid #999;
+    }
+
+    .recipe-input .reset-button:hover {
+        background-color: #ffaa33;
+    }
+
+    .recipe-input .more-button {
+        background-color: #ffb347;
+        color: #000000;
+    }
+
+    .recipe-input .more-button:hover {
+        background-color: #ffaa33;
+    }
+
+    .error-message {
+        color: #ff6b6b;
+        font-size: 1rem;
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    @media (max-width: 768px) {
+        .buttons-container {
+            flex-direction: column;
+            width: 100%;
+        }
+        
+        .recipe-input button {
+            width: 100%;
+        }
+        
+        .mode-select-container {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+</style>
+{% endblock %}

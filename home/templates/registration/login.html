@@ -1,103 +1,187 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-image: url('https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .login-container {
-            
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
-            text-align: center;
-        }
-        h1 {
-            margin-bottom: 20px;
-            color: #333;
-        }
-        form {
-            display: flex;
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Login{% endblock %}
+
+{% block body %}
+{% include 'navbar.html' %}
+<link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Schoolbell&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        background-color: #2f2f2f;
+        background-image: url('https://www.transparenttextures.com/patterns/asfalt-light.png');
+        color: #f8f8f8;
+        font-family: 'Indie Flower', cursive;
+        margin: 0;
+        padding: 0;
+    }
+
+    .header {
+        text-align: center;
+        padding: 30px 20px 15px; /* Reduced padding to make it thinner */
+        background-image: url('https://img.freepik.com/premium-photo/dark-wooden-panels-rustic-blank-background-copy-space_92134-3381.jpg?semt=ais_hybrid&w=740');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        margin-bottom: 20px; /* Reduced margin */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        position: relative;
+        height: 80px; /* Fixed height to make it consistently thinner */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .header::after {
+        content: '';
+        position: absolute;
+        bottom: -8px; /* Reduced shadow size */
+        left: 0;
+        right: 0;
+        height: 8px;
+        background: linear-gradient(to bottom, rgba(0,0,0,0.3), transparent);
+    }
+
+    .header h1 {
+        font-family: 'Indie Flower', cursive;
+        font-size: 2.8rem; /* Slightly smaller font */
+        color: #fffbea;
+        margin: 0;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        padding: 0;
+    }
+
+    .content {
+        max-width: 500px;
+        margin: 0 auto 30px;
+        padding: 0 20px;
+    }
+
+    /* Rest of your existing styles remain unchanged */
+    .login-container {
+        background-color: rgba(0, 0, 0, 0.2);
+        border: 2px dashed #fffbea;
+        border-radius: 16px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.08);
+    }
+
+    .login-container h1 {
+        font-family: 'Indie Flower', cursive;
+        font-size: 2.5rem;
+        color: #fffbea;
+        margin-top: 0;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 1.1rem;
+        color: #fffbea;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 10px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border: 1px solid #fffbea;
+        border-radius: 8px;
+        color: #f8f8f8;
+        font-family: 'Indie Flower', cursive;
+        font-size: 1rem;
+    }
+
+    button {
+        background-color: transparent;
+        color: #fffbea;
+        border: 2px solid #fffbea;
+        border-radius: 8px;
+        padding: 10px 20px;
+        font-family: 'Indie Flower', cursive;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.3s;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    button:hover {
+        background-color: #fffbea;
+        color: #2f2f2f;
+    }
+
+    .alert {
+        color: #97daec;
+        margin-bottom: 20px;
+        text-align: center;
+        font-size: 1.1rem;
+    }
+
+    .buttons-container {
+        display: flex;
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    .buttons-container button {
+        flex: 1;
+    }
+
+    @media (max-width: 768px) {
+        .buttons-container {
             flex-direction: column;
-            align-items: center; 
         }
-        form p {
-            margin: 10px 0;
-            width: 100%; 
-            text-align: center;
+        
+        .header h1 {
+            font-size: 2.2rem;
         }
-        .form-group {
-            width: 100%;
-            text-align: left;
+        
+        .header {
+            height: 70px;
+            padding: 20px 15px 10px;
         }
-        label {
-            font-weight: bold;
-            margin-bottom: 5px;
-            display: block;
-            text-align: center; 
-        }
-        input[type="text"], input[type="password"] {
-            width: 94%; 
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            text-align: center; 
-        }
-        button {
-            background-color: #467932;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            width: 100%; 
-            margin-top: 10px; 
-        }
-        button:hover {
-            background-color: #066c16;
-        }
-    </style>
-</head>
-<body>
+    }
+</style>
+
+<div class="header">
+    <h1>Welcome to ThinkEat</h1>
+</div>
+
+<div class="content">
     <div class="login-container">
-        <h1>Login</h1>
-
-
         {% if messages %}
-        <div class="alert alert-primary" role="alert">
+        <div class="alert">
             {% for message in messages %}
             {{ message }}
             {% endfor %}
         </div>
         {% endif %}
+
+        <h1>Login</h1>
         <form method="post">
             {% csrf_token %}
             <div class="form-group">
                 <label for="username">Username</label>
-                <input type="text" class="form-control" name="username" id="username" placeholder="Enter username" required>
+                <input type="text" name="username" id="username" placeholder="Enter username" required>
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
-            </div>            
-
-            <button type="submit">Login</button>
-            <button type="button" onclick="window.location.href='/register/';">Register</button>
+                <input type="password" name="password" id="password" placeholder="Password" required>
+            </div>
+            
+            <div class="buttons-container">
+                <button type="submit">Login</button>
+                <button type="button" onclick="window.location.href='/register/';">Register</button>
+            </div>
         </form>
     </div>
-</body>
-</html>
+</div>
+{% endblock %}

@@ -1,40 +1,148 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}My Account{% endblock %}
 
-{% block content %}
-<div class="account-container">
-    <h1>My Account</h1>
-    {% if user.is_authenticated %}
-        <p>Hello, {{user.username}}!</p>
-    {% else %}
-        <p>Hello, random person.</p>
-    {% endif %}
-    <form method="post" action="{% url 'logout' %}">
-        {% csrf_token %}
-        <button type="submit">Logout</button>
-    </form>
-</div>
+{% block body %}
+    {% include 'navbar.html' %}
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Schoolbell&display=swap" rel="stylesheet">
 
-<style>
-    .account-container {
-        text-align: center;
-        margin: 50px auto;
-        padding: 40px;
-        max-width: 800px;
-        background: #ffffff;
-        border-radius: 15px;
-        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
-    }
+    <style>
+        body {
+            background-color: #2f2f2f;
+            background-image: url('https://www.transparenttextures.com/patterns/asfalt-light.png');
+            color: #f8f8f8;
+            font-family: 'Indie Flower', cursive;
+            margin: 0;
+            padding: 0;
+        }
 
-    .account-container h1 {
-        font-size: 2.5em;
-        color: #333;
-    }
+        .account-container {
+            text-align: center;
+            margin: 60px auto;
+            padding: 40px;
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.08),
+                        0 6px 10px rgba(0, 0, 0, 0.3);
+            border: 2px dashed rgba(255, 255, 255, 0.15);
+        }
 
-    .account-container p {
-        font-size: 1.2em;
-        color: #666;
-    }
-</style>
+        .form-errors ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .account-container h1 {
+            font-family: 'Schoolbell', cursive;
+            font-size: 3rem;
+            color: #fffbea;
+            margin-bottom: 20px;
+        }
+
+        .account-container p {
+            font-size: 1.4em;
+            color: #eaeaea;
+            margin-bottom: 20px;
+        }
+
+        .account-container button {
+            padding: 10px 24px;
+            font-size: 1.1rem;
+            font-family: inherit;
+            background-color: transparent;
+            color: #fff;
+            border: 2px solid #fff;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .account-container form button {
+            margin-top: 15px;
+        }
+
+        .account-container button:hover {
+            background-color: #fff;
+            color: #2f2f2f;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        form p {
+            margin: 10px 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        .form-group {
+            width: 100%;
+            text-align: left;
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: #fff;  /* Adjust label color as needed */
+        }
+
+        .alert {
+            margin: 15px;
+        }
+    </style>
+
+    <div class="account-container">
+        <h1>My Account</h1>
+        {% if messages %}
+            <div class="alert">
+                {% for message in messages %}
+                    <div class="message {{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% if form.errors %}
+        <div class="form-errors">
+            {% for field in form %} 
+                {% if field.errors %}
+                    <div class="error">{{ field.errors }}</div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if user.is_authenticated %}
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    {{ form.username }}
+                </div>
+                <div class="form-group">
+                    <label for="first_name">First Name:</label>
+                    {{ form.first_name }}
+                </div>
+                <div class="form-group">
+                    <label for="last_name">Last Name:</label>
+                    {{ form.last_name }}
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address:</label>
+                    {{ form.email }}
+                </div>
+                <div class="form-group">
+                    <label for="birth_date">Birth Date:</label>
+                    {{ form.birth_date }}
+                </div>
+                <button type="submit">Update Info</button>
+            </form>
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit">Logout</button>
+            </form>
+        {% endif %}
+    </div>
 {% endblock %}

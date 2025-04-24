@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}ThinkEat Tutorial{% endblock %}
+
+{% block body %}
+{% include 'navbar.html' %}
+<link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Schoolbell&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        background-color: #2f2f2f;
+        background-image: url('https://www.transparenttextures.com/patterns/asfalt-light.png');
+        color: #f8f8f8;
+        font-family: 'Indie Flower', cursive;
+        margin: 0;
+        padding: 0;
+    }
+
+    .header {
+        text-align: center;
+        padding: 40px 20px 10px;
+    }
+
+    .header h1 {
+        font-family: 'Schoolbell', cursive;
+        font-size: 3rem;
+        color: #fffbea;
+        margin: 0;
+    }
+
+    .content {
+        max-width: 1000px;
+        margin: 30px auto;
+        padding: 0 20px;
+    }
+
+    .section {
+        background-color: rgba(0, 0, 0, 0.2);
+        border: 2px dashed #fffbea;
+        border-radius: 16px;
+        padding: 25px;
+        margin-bottom: 30px;
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.08);
+    }
+
+    .section h2 {
+        font-size: 1.8rem;
+        color: #fffbea;
+        border-bottom: 1px solid #fffbea;
+        padding-bottom: 8px;
+        margin-bottom: 15px;
+    }
+
+    .section ol {
+        padding-left: 1.2em;
+    }
+
+    .section li {
+        margin-bottom: 15px;
+        line-height: 1.6;
+        font-size: 1.1rem;
+    }
+
+    code {
+        background-color: #f4f4f4;
+        color: #333;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-family: monospace;
+    }
+
+    em {
+        color: #ffd700;
+        font-style: normal;
+        font-weight: bold;
+    }
+
+    .video-container {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+        border-radius: 10px;
+        border: 2px solid #fffbea;
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+    .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+</style>
+
+<div class="header">
+    <h1>ThinkEat Tutorial</h1>
+</div>
+
+<div class="content">
+    <div class="section">
+        <h2>Watch our ThinkEat Demo!</h2>
+        <div class="video-container">
+            <iframe 
+                src="https://youtube.com/embed/apHTNO4F0m4" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+            </iframe>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>How to Use ThinkEat</h2>
+        <ol>
+            <li>
+                <strong>Sign Up:</strong> 
+                ThinkEat requires an account, so click on my account and navigate to register so you can sign up today! If you already have an account, simply log in.
+            </li>
+            <li>
+                <strong>Navigating the Website:</strong> 
+                When using the navbars click any text to navigate to that page.<br>
+                - <em>Tutorial</em>: Click here to learn how to use ThinkEat<br>
+                - <em>About</em>: Click here to learn more about ThinkEat and the minds behind it<br>
+                - <em>Icon</em>: Click on Braxton our mascot, to return to the home Page<br>
+                - <em>ThinkEat</em>: Click here to utilize ThinkEat's main functionality<br>
+                - <em>My Account</em>: Click here to access your account and view your saved recipes<br>
+            </li>
+            <li>
+                <strong>Select a Mode:</strong> Use the dropdown menu to choose between <em>Ingredients Mode</em> and <em>Dish Name Mode</em> depending on your specific needs.
+            </li>
+            <li>
+                <strong>Enter Your Input:</strong><br>
+                - Using the <em>Ingredients Mode</em>, you should type a comma-separated list like this: "<strong>eggs, spinach, cheese</strong>". That will give you a couple of options of recipes to pick from<br>
+                - Using the <em>Dish Name Mode</em>, you simply need to type the dish name you want like this: "<strong>Chicken Parmesan</strong>" This will give you instructions to cook sed recipe with the ingredients needed.
+            </li>
+            <li>
+                <strong>Explore Recipes:</strong><br>
+                In Ingredients Mode, ThinkEat will show you up to <strong>5</strong> recipe suggestions at a time. Type the number or name of a recipe to get detailed instructions, or click the <em>More</em> button for additional suggestions!
+            </li>
+            <li>
+                <strong>Reset When Needed:</strong><br>
+                Click the <em>Reset</em> button to clear your current session with Braxton and start fresh!
+            </li>
+            <li>
+                <strong>Switch Modes Anytime:</strong><br>
+                Use the mode dropdown to switch between inputs when needed. <strong>Be Aware</strong> this will clear you current log, so make sure you save your current recipe if needed!
+            </li>
+            <li>
+                <strong>Save Your Recipes:</strong><br>
+                Use the "save recipe" button and have your current recipe stored within your account information!
+            </li>
+            <li>
+                <strong>View Your Saved Recipes:</strong><br>
+                Click on the my account button and click on the saved recipes button. That will bring you to a page of all of your favorites!
+            </li>
+            <li>
+                <strong>My Account:</strong><br>
+                When viewing your account information, you can change any of your information! Simply, change what you want, then click the "update info" button to save it. <strong>Be Aware</strong> you cannot change your username to that of another existing user.
+            </li>
+        </ol>
+    </div>
+</div>
+{% endblock %}
